@@ -168,3 +168,4 @@ fabric.properties
 debug/
 **/*.rs.bk
 *.pdb
+*claude*
