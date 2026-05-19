@@ -5,7 +5,7 @@ import WindowChrome from "./WindowChrome";
 export default function AppShell()
 {
     return (
-        <div className="flex flex-col h-screen w-screen overflow-hidden bg-bg-0">
+        <div className="flex flex-col h-screen w-screen overflow-hidden bg-bg">
             <WindowChrome/>
             <div className="flex flex-row flex-1 min-h-0">
                 <div className="flex flex-col flex-1 min-w-0 min-h-0">
