@@ -13,104 +13,8 @@ export default {
         './src/**/*.{js,ts,jsx,tsx}',
         './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
     ],
-    darkMode: 'class', // app is dark-by-default; keep the hook for a future light pass
+    darkMode: 'class',
     theme: {
-        // ─── Color system ───────────────────────────────────────────────────────
-        // Replaces the default palette entirely so designers can't reach for
-        // off-system colors. Brand neutrals live under `ink` (text) and `surface`
-        // (backgrounds); semantic hues are oklch so they sit on the same
-        // perceptual ring as the accent.
-        colors: {
-            transparent: 'transparent',
-            current: 'currentColor',
-            black: '#000',
-            white: '#fff',
-
-            // App canvas + elevation
-            bg: '#000',
-            surface: {
-                0: '#050505', // app chrome (titlebar, sidebar, dock)
-                1: '#0b0b0c', // resting card / input
-                2: '#131316', // hovered surface / kbd
-                3: '#1a1a1e', // pressed / active
-            },
-
-            // Text ramp (high → low contrast)
-            ink: {
-                DEFAULT: '#f6f7f9',
-                1: '#f6f7f9', // primary
-                2: '#aeb1b8', // secondary
-                3: '#6b6e76', // tertiary / meta
-                4: '#45474d', // disabled / divider text
-            },
-
-            // Hairlines (used as borders, NOT as text)
-            hairline: {
-                DEFAULT: 'rgba(255, 255, 255, 0.06)',
-                strong: 'rgba(255, 255, 255, 0.12)',
-            },
-
-            // The brand accent (sky-blue) and its soft/glow companions
-            accent: {
-                DEFAULT: 'oklch(0.78 0.15 230)',
-                soft: 'oklch(0.78 0.15 230 / 0.16)',
-                glow: 'oklch(0.78 0.15 230 / 0.35)',
-                ink: '#001a2c', // foreground when sitting on accent fill
-            },
-
-            // Semantic — all share L=0.78–0.82, C=0.15–0.2 so they live on one ring
-            ok: 'oklch(0.78 0.15 155)',
-            warn: 'oklch(0.82 0.15 80)',
-            danger: 'oklch(0.70 0.20 25)',
-            violet: 'oklch(0.72 0.18 295)',
-            pink: 'oklch(0.74 0.17 5)',
-
-            // File-type + connection-protocol swatches.
-            // Each hue ships {bg-from, bg-to, fg, border} — matching the gradient
-            // recipe `.fi-*` / `.conn-icon.*` use in styles.css.
-            filetype: {
-                folder: {from: 'oklch(0.32 0.10 230)', to: 'oklch(0.18 0.05 230)', fg: 'oklch(0.85 0.15 230)'},
-                js: {bg: 'oklch(0.30 0.15 90)', fg: 'oklch(0.90 0.18 90)'},
-                ts: {bg: 'oklch(0.30 0.15 240)', fg: 'oklch(0.90 0.18 240)'},
-                py: {bg: 'oklch(0.30 0.15 155)', fg: 'oklch(0.90 0.18 155)'},
-                rb: {bg: 'oklch(0.30 0.15 25)', fg: 'oklch(0.90 0.18 25)'},
-                json: {bg: 'oklch(0.30 0.10 50)', fg: 'oklch(0.90 0.15 50)'},
-                img: {bg: 'oklch(0.30 0.15 295)', fg: 'oklch(0.90 0.18 295)'},
-                zip: {bg: 'oklch(0.30 0.12 60)', fg: 'oklch(0.90 0.15 60)'},
-                env: {bg: 'oklch(0.30 0.15 0)', fg: 'oklch(0.90 0.18 0)'},
-                yml: {bg: 'oklch(0.30 0.15 5)', fg: 'oklch(0.90 0.18 5)'},
-                sh: {bg: 'oklch(0.30 0.12 130)', fg: 'oklch(0.90 0.15 130)'},
-                sql: {bg: 'oklch(0.30 0.12 270)', fg: 'oklch(0.90 0.15 270)'},
-            },
-
-            // Tag pills (prod/stag/dev) — bg/border/fg triplets
-            tag: {
-                prod: {bg: 'oklch(0.20 0.05 25)', border: 'oklch(0.40 0.12 25)', fg: 'oklch(0.78 0.20 25)'},
-                stag: {bg: 'oklch(0.20 0.05 80)', border: 'oklch(0.40 0.12 80)', fg: 'oklch(0.85 0.15 80)'},
-                dev: {bg: 'oklch(0.20 0.05 155)', border: 'oklch(0.40 0.12 155)', fg: 'oklch(0.85 0.15 155)'},
-            },
-
-            // Syntax tokens used in the dock editor
-            syntax: {
-                keyword: 'oklch(0.78 0.18 295)', // violet
-                fn: 'oklch(0.85 0.15 230)', // accent
-                string: 'oklch(0.85 0.15 90)',  // amber
-                number: 'oklch(0.85 0.15 25)',  // red-orange
-                comment: '#45474d',
-                operator: '#aeb1b8',
-                property: 'oklch(0.85 0.15 155)', // green
-                type: 'oklch(0.85 0.15 230)',
-                tag: 'oklch(0.80 0.18 5)',   // pink
-            },
-
-            // macOS traffic lights — keep as literals; they're brand-locked.
-            traffic: {
-                red: '#ff5f57',
-                yellow: '#febc2e',
-                green: '#28c840',
-            },
-        },
-
         // ─── Typography ─────────────────────────────────────────────────────────
         fontFamily: {
             sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
@@ -215,6 +119,92 @@ export default {
         },
 
         extend: {
+            // ─── App-specific color tokens ──────────────────────────────────────
+            // These extend (not replace) defaults so HeroUI's generated palette
+            // stays intact. Semantic HeroUI colors live in the plugin config below.
+            colors: {
+                // App canvas + elevation
+                bg: '#000',
+                surface: {
+                    0: '#050505',
+                    1: '#0b0b0c',
+                    2: '#131316',
+                    3: '#1a1a1e',
+                },
+
+                // Text ramp (high → low contrast)
+                ink: {
+                    DEFAULT: '#f6f7f9',
+                    1: '#f6f7f9',
+                    2: '#aeb1b8',
+                    3: '#6b6e76',
+                    4: '#45474d',
+                },
+
+                // Hairlines (used as borders, NOT as text)
+                hairline: {
+                    DEFAULT: 'rgba(255, 255, 255, 0.06)',
+                    strong: 'rgba(255, 255, 255, 0.12)',
+                },
+
+                // The brand accent (sky-blue) and its soft/glow companions
+                accent: {
+                    DEFAULT: 'oklch(0.78 0.15 230)',
+                    soft: 'oklch(0.78 0.15 230 / 0.16)',
+                    glow: 'oklch(0.78 0.15 230 / 0.35)',
+                    ink: '#001a2c',
+                },
+
+                // Semantic — all share L=0.78–0.82, C=0.15–0.2 so they live on one ring
+                ok: 'oklch(0.78 0.15 155)',
+                warn: 'oklch(0.82 0.15 80)',
+                violet: 'oklch(0.72 0.18 295)',
+                pink: 'oklch(0.74 0.17 5)',
+
+                // File-type + connection-protocol swatches
+                filetype: {
+                    folder: {from: 'oklch(0.32 0.10 230)', to: 'oklch(0.18 0.05 230)', fg: 'oklch(0.85 0.15 230)'},
+                    js: {bg: 'oklch(0.30 0.15 90)', fg: 'oklch(0.90 0.18 90)'},
+                    ts: {bg: 'oklch(0.30 0.15 240)', fg: 'oklch(0.90 0.18 240)'},
+                    py: {bg: 'oklch(0.30 0.15 155)', fg: 'oklch(0.90 0.18 155)'},
+                    rb: {bg: 'oklch(0.30 0.15 25)', fg: 'oklch(0.90 0.18 25)'},
+                    json: {bg: 'oklch(0.30 0.10 50)', fg: 'oklch(0.90 0.15 50)'},
+                    img: {bg: 'oklch(0.30 0.15 295)', fg: 'oklch(0.90 0.18 295)'},
+                    zip: {bg: 'oklch(0.30 0.12 60)', fg: 'oklch(0.90 0.15 60)'},
+                    env: {bg: 'oklch(0.30 0.15 0)', fg: 'oklch(0.90 0.18 0)'},
+                    yml: {bg: 'oklch(0.30 0.15 5)', fg: 'oklch(0.90 0.18 5)'},
+                    sh: {bg: 'oklch(0.30 0.12 130)', fg: 'oklch(0.90 0.15 130)'},
+                    sql: {bg: 'oklch(0.30 0.12 270)', fg: 'oklch(0.90 0.15 270)'},
+                },
+
+                // Tag pills (prod/stag/dev) — bg/border/fg triplets
+                tag: {
+                    prod: {bg: 'oklch(0.20 0.05 25)', border: 'oklch(0.40 0.12 25)', fg: 'oklch(0.78 0.20 25)'},
+                    stag: {bg: 'oklch(0.20 0.05 80)', border: 'oklch(0.40 0.12 80)', fg: 'oklch(0.85 0.15 80)'},
+                    dev: {bg: 'oklch(0.20 0.05 155)', border: 'oklch(0.40 0.12 155)', fg: 'oklch(0.85 0.15 155)'},
+                },
+
+                // Syntax tokens used in the dock editor
+                syntax: {
+                    keyword: 'oklch(0.78 0.18 295)',
+                    fn: 'oklch(0.85 0.15 230)',
+                    string: 'oklch(0.85 0.15 90)',
+                    number: 'oklch(0.85 0.15 25)',
+                    comment: '#45474d',
+                    operator: '#aeb1b8',
+                    property: 'oklch(0.85 0.15 155)',
+                    type: 'oklch(0.85 0.15 230)',
+                    tag: 'oklch(0.80 0.18 5)',
+                },
+
+                // macOS traffic lights — keep as literals; they're brand-locked.
+                traffic: {
+                    red: '#ff5f57',
+                    yellow: '#febc2e',
+                    green: '#28c840',
+                },
+            },
+
             // Spacing — Tailwind's default 0.25rem scale is fine; add IDE-specific
             // anchors only where the design uses them.
             spacing: {
@@ -304,14 +294,76 @@ export default {
         },
     },
     plugins: [heroui({
+        defaultTheme: 'dark',
         themes: {
             dark: {
                 colors: {
-                    primary: "#ff3247",
-                    secondary: "#eaeaea",
-                    background: "#18181b",
-                }
+                    background: '#000',
+                    foreground: '#f6f7f9',
+                    divider: 'rgba(255, 255, 255, 0.06)',
+                    focus: '#21c8ff',
+                    content1: {
+                        DEFAULT: '#0b0b0c',
+                        foreground: '#f6f7f9',
+                    },
+                    content2: {
+                        DEFAULT: '#131316',
+                        foreground: '#aeb1b8',
+                    },
+                    content3: {
+                        DEFAULT: '#1a1a1e',
+                        foreground: '#6b6e76',
+                    },
+                    content4: {
+                        DEFAULT: '#242429',
+                        foreground: '#45474d',
+                    },
+                    default: {
+                        DEFAULT: '#1a1a1e',
+                        foreground: '#f6f7f9',
+                        50: '#050505',
+                        100: '#0b0b0c',
+                        200: '#131316',
+                        300: '#1a1a1e',
+                        400: '#45474d',
+                        500: '#6b6e76',
+                        600: '#aeb1b8',
+                        700: '#d1d3d8',
+                        800: '#e8e9ec',
+                        900: '#f6f7f9',
+                    },
+                    primary: {
+                        DEFAULT: '#21c8ff',
+                        foreground: '#001a2c',
+                        50: '#03141a',
+                        100: '#052029',
+                        200: '#08303d',
+                        300: '#0c4659',
+                        400: '#116480',
+                        500: '#21c8ff',
+                        600: '#00b4f0',
+                        700: '#009ed8',
+                        800: '#007eb7',
+                        900: '#005187',
+                    },
+                    secondary: {
+                        DEFAULT: '#ae89ff',
+                        foreground: '#fff',
+                    },
+                    success: {
+                        DEFAULT: '#59d38c',
+                        foreground: '#fff',
+                    },
+                    warning: {
+                        DEFAULT: '#f7b83d',
+                        foreground: '#000',
+                    },
+                    danger: {
+                        DEFAULT: '#ff5f5b',
+                        foreground: '#fff',
+                    },
+                },
             },
-        }
+        },
     })],
 };
