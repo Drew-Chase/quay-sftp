@@ -37,16 +37,16 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         if (this.state.hasError)
         {
             return this.props.fallback || (
-                <div className="p-4 text-center text-danger gap-4 flex flex-col items-center justify-center w-full">
+                <div className="p-4 text-center text-danger gap-4 flex flex-col items-center justify-center w-full h-full font-mono">
                     <h2 className={"text-2xl"}>An unexpected error has occurred!</h2>
                     <Button
                         onPress={() => this.setState({hasError: false})}
-                        className={"font-minecraft-body"}
-                        radius={"none"}
                         startContent={<Icon className={"text-xl"} icon={"tabler:reload"}/>}
-                        color={"primary"}
+                        color={"danger"}
+                        size={"lg"}
+                        variant={"ghost"}
                     >
-                        Try again
+                        Reload
                     </Button>
                 </div>
             );
