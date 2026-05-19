@@ -2,6 +2,8 @@ import {useNavigate} from "react-router-dom";
 import {useConnectionGateway} from "../ConnectionGateway";
 import {Connection} from "../ts/connection";
 import {Divider} from "@heroui/react";
+import {ApplicationSplash} from "../components/connection_list/ApplicationSplash.tsx";
+import {NewConnectionForm} from "../components/connection_list/NewConnectionForm.tsx";
 
 export function ConnectionsPage()
 {
@@ -21,6 +23,10 @@ export function ConnectionsPage()
 
             {/* Branding and new connection form */}
             <div className={"flex flex-col grow w-full start-left relative"}>
+                <ApplicationSplash/>
+                {/* Spacer */}
+                <div className={"my-auto"}/>
+                <NewConnectionForm/>
             </div>
 
             <Divider orientation={"vertical"}/>
