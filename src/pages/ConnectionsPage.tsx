@@ -4,6 +4,7 @@ import {Connection} from "../ts/connection";
 import {Divider} from "@heroui/react";
 import {ApplicationSplash} from "../components/connection_list/ApplicationSplash.tsx";
 import {NewConnectionForm} from "../components/connection_list/NewConnectionForm.tsx";
+import {SavedConnectionsList} from "../components/connection_list/SavedConnectionsList.tsx";
 
 export function ConnectionsPage()
 {
@@ -33,7 +34,7 @@ export function ConnectionsPage()
 
             {/* Connections List */}
             <div className={"flex flex-col grow w-full"}>
-
+                <SavedConnectionsList />
             </div>
         </div>
     );
