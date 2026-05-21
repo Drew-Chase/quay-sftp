@@ -7,13 +7,14 @@ export type TagOption = {
     code: string;
     color: string;
     selectedColor: string;
+    darkColor: string;
 }
 
 export const tagOptions: TagOption[] = [
-    {name: "production", code: "prod", color: "#d74745", selectedColor: "#9e2625"},
-    {name: "staging", code: "stag", color: "#d29000", selectedColor: "#805a00"},
-    {name: "development", code: "dev", color: "#04ab62", selectedColor: "#027a46"},
-    {name: "other", code: "other", color: "#907ae9", selectedColor: "#6250a3"}
+    {name: "production", code: "prod", color: "#d74745", selectedColor: "#9e2625", darkColor: "#290b0a"},
+    {name: "staging", code: "stag", color: "#d29000", selectedColor: "#805a00", darkColor: "#221300"},
+    {name: "development", code: "dev", color: "#04ab62", selectedColor: "#027a46", darkColor: "#001c0b"},
+    {name: "other", code: "other", color: "#907ae9", selectedColor: "#6250a3", darkColor: "#1c172c"},
 ];
 
 type TagGroupSelectorProps = {
