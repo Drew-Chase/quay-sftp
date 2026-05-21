@@ -1,3 +1,12 @@
+import {TagOption, tagOptions} from "../components/TagOptions.tsx";
+
+export enum ConnectionType
+{
+    FTP,
+    SFTP,
+    S3
+}
+
 export class Connection
 {
     private readonly _id: string | null = null;
@@ -7,14 +16,14 @@ export class Connection
     private readonly _username: string = "";
     private readonly _password: string | null = null;
     private readonly _keyfile: string | null = null;
-    private readonly _secure: boolean = false;
     private readonly _timeout: number = 10000;
     private readonly _temp: boolean = true;
-    private readonly _tags: string[] = [];
+    private readonly _tag: TagOption | null = null;
     private readonly _remotePath: string = "/";
+    private readonly _type: ConnectionType = ConnectionType.SFTP;
 
 
-    constructor(id: string | null, connectionName: string | null, host: string, port: number, username: string, password: string | null, keyfile: string | null, secure: boolean, timeout: number, temp: boolean, tags: string[], remotePath: string)
+    constructor(id: string | null, connectionName: string | null, host: string, port: number, username: string, password: string | null, keyfile: string | null, timeout: number, temp: boolean, tag: TagOption | null, remotePath: string, type: ConnectionType)
     {
         this._id = id;
         this._connectionName = connectionName;
@@ -23,11 +32,11 @@ export class Connection
         this._username = username;
         this._password = password;
         this._keyfile = keyfile;
-        this._secure = secure;
         this._timeout = timeout;
         this._temp = temp;
-        this._tags = tags;
+        this._tag = tag;
         this._remotePath = remotePath;
+        this._type = type;
     }
 
     get id(): string | null
@@ -60,10 +69,6 @@ export class Connection
         return this._keyfile;
     }
 
-    get secure(): boolean
-    {
-        return this._secure;
-    }
 
     get timeout(): number
     {
@@ -75,9 +80,14 @@ export class Connection
         return this._temp;
     }
 
-    get tags(): string[]
+    get tag(): TagOption | null
     {
-        return this._tags;
+        return this._tag;
+    }
+
+    get type(): ConnectionType
+    {
+        return this._type;
     }
 
     get remotePath(): string
@@ -112,16 +122,19 @@ export class Connection
     {
         // TODO: Implement fetching connections logic
         return [
-            new Connection("1", "Production Web Server", "sftp.example.com", 22, "user1", "pass123", null, true, 10000, false, ["production", "web"], "/var/www"),
-            new Connection("2", "Staging FTP Server", "ftp.testserver.net", 21, "admin", null, "/path/to/key.pem", false, 15000, false, ["staging"], "/home/admin"),
-            new Connection("3", "Secure Development Server", "secure.myserver.io", 22, "deploy", "secret456", null, true, 10000, true, ["dev", "temp"], "/opt/deploy"),
-            new Connection("4", "Backup Storage", "backup.storage.com", 22, "backup_user", null, "/keys/backup.key", true, 20000, false, ["backup"], "/backups"),
-            new Connection("5", "Local Development", "dev.localhost", 2222, "developer", "dev123", null, false, 5000, true, ["local", "dev"], "/home/dev"),
-            new Connection("6", "Cloud Production Storage", "cloud.provider.com", 22, "cloud_admin", null, "/secure/cloud.pem", true, 10000, false, ["cloud", "production"], "/mnt/storage"),
-            new Connection("7", "Legacy FTP Server", "legacy.oldserver.org", 21, "legacy", "old_pass", null, false, 30000, false, ["legacy"], "/var/ftp"),
-            new Connection("8", "API Gateway Files", "api.gateway.net", 22, "api_user", "api_secret", null, true, 10000, false, ["api"], "/api/files"),
-            new Connection("9", "Media CDN Storage", "media.cdn.io", 22, "media", null, "/certs/media.key", true, 10000, false, ["media", "cdn"], "/cdn/media"),
-            new Connection("10", "Temporary Workspace", "temp.workspace.local", 22, "temp_user", "temp123", null, false, 10000, true, ["temp", "test"], "/tmp")
+            new Connection("1", "Production Web Server", "sftp.example.com", 22, "user1", "pass123", null, 10000, false, tagOptions[0], "/var/www", ConnectionType.SFTP),
+            new Connection("2", "Staging FTP Server", "ftp.testserver.net", 21, "admin", null, "/path/to/key.pem", 15000, false, tagOptions[1], "/home/admin", ConnectionType.FTP),
+            new Connection("3", "Secure Development Server", "secure.myserver.io", 22, "deploy", "secret456", null, 10000, true, null, "/opt/deploy", ConnectionType.SFTP),
+            new Connection("4", "Backup Storage", "backup.storage.com", 22, "backup_user", null, "/keys/backup.key", 20000, false, null, "/backups", ConnectionType.S3),
+            new Connection("5", "Local Development", "dev.localhost", 2222, "developer", "dev123", null, 5000, true, tagOptions[2], "/home/dev", ConnectionType.SFTP),
+            new Connection("6", "Cloud Production Storage", "cloud.provider.com", 22, "cloud_admin", null, "/secure/cloud.pem", 10000, false, tagOptions[0], "/mnt/storage", ConnectionType.S3),
+            new Connection("7", "Legacy FTP Server", "legacy.oldserver.org", 21, "legacy", "old_pass", null, 30000, false, tagOptions[3], "/var/ftp", ConnectionType.FTP),
+            new Connection("8", "API Gateway Files", "api.gateway.net", 22, "api_user", "api_secret", null, 10000, false, tagOptions[0], "/api/files", ConnectionType.SFTP),
+            new Connection("9", "Media CDN Storage", "media.cdn.io", 22, "media", null, "/certs/media.key", 10000, false, null, "/cdn/media", ConnectionType.S3),
+            new Connection("10", "Temporary Workspace", "temp.workspace.local", 22, "temp_user", "temp123", null, 10000, true, tagOptions[2], "/tmp", ConnectionType.FTP),
+            new Connection("10", "Temporary Workspace", "temp.workspace.local", 22, "temp_user", "temp123", null, 10000, true, tagOptions[2], "/tmp", ConnectionType.FTP),
+            new Connection("10", "Temporary Workspace", "temp.workspace.local", 22, "temp_user", "temp123", null, 10000, true, tagOptions[2], "/tmp", ConnectionType.FTP),
+            new Connection("10", "Temporary Workspace", "temp.workspace.local", 22, "temp_user", "temp123", null, 10000, true, tagOptions[2], "/tmp", ConnectionType.FTP)
         ];
     }
 
