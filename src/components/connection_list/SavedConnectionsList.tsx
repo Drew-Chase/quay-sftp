@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {getVersion} from "@tauri-apps/api/app";
 import {openUrl} from "@tauri-apps/plugin-opener";
 import {Connection} from "../../ts/connection.ts";
+import {ConnectionItem} from "./ConnectionItem.tsx";
 
 export function SavedConnectionsList()
 {
@@ -55,14 +56,12 @@ export function SavedConnectionsList()
                 <Tab key={"recent"} title={<>Recent<Chip className={"ml-3"} variant={"faded"} size={"sm"}>1</Chip></>}/>
             </Tabs>
 
-            <ScrollShadow>
-                <div className={"flex flex-col gap-2 max-h-[calc(100dvh-370px)] overflow-y-auto h-screen"}>
-                    {connections.map((connection) => <ConnectionItem key={connection.id} connection={connection}/>)}
-                </div>
+            <ScrollShadow className={"flex flex-col gap-2 overflow-y-auto scrollbar-hide"}>
+                {connections.map((connection) => <ConnectionItem key={connection.id} connection={connection}/>)}
             </ScrollShadow>
 
             <Divider orientation={"horizontal"}/>
-            <div className={"flex flex-row gap-2 text-xs font-mono text-ink-3"}>
+            <div className={"flex flex-row gap-2 text-xs font-mono text-ink-3 items-center -mt-2 pb-4"}>
                 <p className={"mr-auto"}>Quay v{version} - Build 2026.5.17</p>
                 <div className={"flex flex-row text-ink-4"}>
                     <Button variant={"light"} size={"sm"} className={"text-ink-3 hover:text-ink-2"} onPress={() => openUrl(`https://quayapp.com/changes/${version}`)}>What's new</Button>
@@ -75,13 +74,3 @@ export function SavedConnectionsList()
     );
 }
 
-function ConnectionItem({ connection }: { connection: Connection }) {
-    return (
-        <div className={"flex flex-row gap-2"}>
-            <div className={"flex flex-col gap-1"}>
-                <p className={"font-bold"}>{connection.connectionName}</p>
-                <p className={"text-ink-3"}>{connection.host}</p>
-            </div>
-        </div>
-    );
-}
