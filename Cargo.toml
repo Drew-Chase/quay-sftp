@@ -1,3 +1,9 @@
 [workspace]
 resolver = "3"
-members = ["./src-tauri"]
+members = ["crates/lib", "crates/cli", "crates/desktop"]
+
+
+[workspace.dependencies]
+color-eyre = {version = "0.6.5", features = ["issue-url", "track-caller"]}
+tracing = {version = "0.1.44", features = ["async-await"]}
+tracing-subscriber = {version = "0.3.23", features = ["ansi"]}
