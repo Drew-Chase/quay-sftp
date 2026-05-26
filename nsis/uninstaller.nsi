@@ -1,0 +1,4 @@
+﻿Section "Uninstall"
+
+
+SectionEnd
