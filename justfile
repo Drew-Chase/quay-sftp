@@ -12,7 +12,7 @@ publish version="":
 install:
     cargo install update-version --locked
 
-# Builds the application and its installers for the host platform
+# Builds the application for the host platform
 build: install
     cargo build --workspace --release
 
