@@ -1,0 +1,226 @@
+QUAY SOFTWARE LICENSE AGREEMENT
+Version 1.0 - Effective May 26, 2026
+
+Copyright (c) 2026 Drew Chase. All rights reserved.
+
+This License Agreement ("Agreement") governs your use of the Quay desktop
+application, command-line interface, and associated libraries (collectively,
+the "Software"). By installing, copying, or otherwise using the Software, you
+agree to be bound by the terms of this Agreement.
+
+
+1. DEFINITIONS
+
+   "Free Tier" means the zero-cost edition of the Software limited to one (1)
+   workspace, up to fifteen (15) saved connections, and a single integrated
+   terminal per connection, with all data stored locally on the machine.
+
+   "Pro Tier" means the paid edition of the Software available at $6 USD per
+   month (billed yearly) or $8 USD per month (billed monthly), which includes
+   all Free Tier features plus unlimited workspaces and connections, cloud
+   sync, SSH tunnels and jump hosts, SFTP over bastion, connection profiles
+   with environment variables, multi-tab editor, split panes, find-and-replace
+   across files, diff view, file history, multiple terminal tabs, command
+   snippets and macros, folder sync rules, scheduled syncs, conflict UI,
+   custom themes, tag colors, and keybinding profiles.
+
+   "Team Tier" means the paid edition of the Software available at $12 USD per
+   user per month (billed yearly), which includes all Pro Tier features plus
+   shared team workspaces with locally-stored credentials, workspace config
+   export and import, command history sync across devices and teammates,
+   per-server activity logs exportable as JSON, single sign-on (SAML) and SCIM
+   provisioning, centralized billing and seat management, and priority support
+   with a response time of less than one (1) business day.
+
+   "Lifetime License" means a one-time purchase of $99 USD granting perpetual
+   access to all Pro Tier features on up to three (3) personal machines, plus
+   one (1) year of cloud sync. Cloud sync may be renewed at $24 USD per year.
+   The license itself never expires.
+
+   "Licensee" means you, the individual or entity exercising the rights
+   granted under this Agreement.
+
+   "Licensor" means Drew Chase.
+
+
+2. GRANT OF LICENSE
+
+   Subject to the terms of this Agreement, the Licensor grants the Licensee a
+   limited, non-exclusive, non-transferable, revocable license to:
+
+   (a) Install and use the Software on the number of machines permitted by the
+       Licensee's tier.
+
+   (b) Use the Software solely for the Licensee's own personal or internal
+       business purposes.
+
+
+3. RESTRICTIONS
+
+   The Licensee shall NOT:
+
+   (a) Copy, modify, adapt, translate, reverse-engineer, decompile,
+       disassemble, or create derivative works based on the Software, except
+       to the extent that such activity is expressly permitted by applicable
+       law notwithstanding this limitation.
+
+   (b) Distribute, sublicense, lease, rent, loan, or otherwise transfer the
+       Software or any rights therein to any third party.
+
+   (c) Remove, alter, or obscure any proprietary notices, labels, or marks on
+       the Software.
+
+   (d) Use the Software to build a competing product or service.
+
+   (e) Share, publish, or redistribute license keys, activation codes, or
+       account credentials.
+
+   (f) Circumvent or attempt to circumvent any license enforcement, tier
+       restrictions, or technical protection measures in the Software.
+
+
+4. INTELLECTUAL PROPERTY
+
+   The Software and all copies thereof are proprietary to the Licensor and
+   title thereto remains in the Licensor. All applicable rights to patents,
+   copyrights, trademarks, and trade secrets in the Software are and shall
+   remain in the Licensor. The Licensee does not acquire any rights, express
+   or implied, in the Software other than those specified in this Agreement.
+
+
+5. CLOUD SYNC AND DATA
+
+   (a) Cloud sync features are available only to Pro Tier, Team Tier, and
+       active Lifetime License holders with a current sync subscription.
+
+   (b) The Licensor shall make commercially reasonable efforts to ensure the
+       availability and integrity of synced data but shall not be liable for
+       data loss arising from service interruptions, account termination, or
+       force majeure events.
+
+   (c) The Licensee retains ownership of all data transmitted through or
+       stored by the Software. The Licensor shall not access Licensee data
+       except as necessary to provide the service or as required by law.
+
+
+6. TEAM TIER - ADDITIONAL TERMS
+
+   (a) The entity purchasing a Team Tier subscription ("Organization") is
+       responsible for managing seats and ensuring compliance with this
+       Agreement by all authorized users.
+
+   (b) Team workspaces and shared configurations are owned by the
+       Organization. Individual user credentials remain local and are not
+       accessible to the Organization or the Licensor.
+
+   (c) Upon termination of a Team Tier subscription, access to shared
+       workspaces and cloud-synced team configurations will be revoked.
+       Individual users may export their own data prior to termination.
+
+
+7. LIFETIME LICENSE - ADDITIONAL TERMS
+
+   (a) The Lifetime License grants perpetual access to all features included
+       in the Pro Tier as of the date of purchase, plus any future updates to
+       the Pro Tier.
+
+   (b) The Lifetime License is valid on up to three (3) machines personally
+       owned or operated by the Licensee. The Licensee may deactivate and
+       reactivate machines at any time.
+
+   (c) Cloud sync is included for one (1) year from the date of purchase.
+       After expiration, the Licensee may renew cloud sync at $24 USD per
+       year. All local features remain fully functional without cloud sync.
+
+   (d) The Lifetime License is non-transferable and is bound to the
+       purchasing individual. It may not be used for Team Tier features.
+
+
+8. FREE TIER - ADDITIONAL TERMS
+
+   (a) The Free Tier is provided at no cost and may be used indefinitely
+       without registration, subject to the feature limitations defined in
+       Section 1.
+
+   (b) The Licensor reserves the right to modify Free Tier feature limits
+       with reasonable notice.
+
+   (c) No service-level agreement, cloud sync, or priority support is
+       provided with the Free Tier.
+
+
+9. PAYMENT AND BILLING
+
+   (a) Pro and Team Tier subscriptions are billed in advance on a monthly or
+       yearly basis as selected by the Licensee at the time of purchase.
+
+   (b) All fees are non-refundable except as required by applicable law or as
+       expressly stated in the Licensor's refund policy.
+
+   (c) The Licensor reserves the right to change pricing with thirty (30)
+       days' written notice. Price changes shall not affect the current
+       billing cycle.
+
+
+10. TERMINATION
+
+    (a) The Licensee may terminate this Agreement at any time by uninstalling
+        the Software and destroying all copies in the Licensee's possession.
+
+    (b) The Licensor may terminate this Agreement immediately if the Licensee
+        breaches any term of this Agreement.
+
+    (c) Upon termination of a paid subscription, the Licensee's access shall
+        revert to the Free Tier. No data will be deleted, but features
+        exceeding Free Tier limits will become read-only or inaccessible
+        until a paid tier is restored.
+
+    (d) Sections 3, 4, 11, 12, and 13 shall survive any termination of this
+        Agreement.
+
+
+11. DISCLAIMER OF WARRANTIES
+
+    THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. THE LICENSOR DOES
+    NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE OR UNINTERRUPTED.
+
+
+12. LIMITATION OF LIABILITY
+
+    IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
+    SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR
+    REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA,
+    USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM (A) THE
+    LICENSEE'S USE OR INABILITY TO USE THE SOFTWARE; (B) ANY UNAUTHORIZED
+    ACCESS TO OR ALTERATION OF THE LICENSEE'S DATA; OR (C) ANY OTHER MATTER
+    RELATING TO THE SOFTWARE.
+
+    THE LICENSOR'S TOTAL AGGREGATE LIABILITY SHALL NOT EXCEED THE AMOUNT PAID
+    BY THE LICENSEE FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE
+    EVENT GIVING RISE TO THE CLAIM.
+
+
+13. GENERAL
+
+    (a) This Agreement constitutes the entire agreement between the parties
+        concerning the Software and supersedes all prior agreements and
+        understandings.
+
+    (b) This Agreement shall be governed by and construed in accordance with
+        the laws of the United States, without regard to its conflict of law
+        provisions.
+
+    (c) If any provision of this Agreement is held to be unenforceable, the
+        remaining provisions shall continue in full force and effect.
+
+    (d) The Licensor's failure to enforce any right or provision of this
+        Agreement shall not constitute a waiver of such right or provision.
+
+    (e) The Licensor may update this Agreement from time to time. Continued
+        use of the Software after changes constitutes acceptance of the
+        revised terms.
+
+
+For questions about licensing, contact: support@quayapp.com
