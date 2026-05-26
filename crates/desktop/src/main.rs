@@ -1,4 +1,11 @@
+#![cfg_attr(all(target_os = "windows", not(debug_assertions)), windows_subsystem = "windows")]
+
+pub mod utils;
+
+slint::include_modules!();
+
 use color_eyre::Result;
+use color_eyre::eyre::Context;
 use std::process::ExitCode;
 
 fn main() -> Result<ExitCode> {
@@ -12,5 +19,10 @@ fn main() -> Result<ExitCode> {
         return quay_cli::run();
     }
 
+    let app = MainWindow::new().with_context(|| "Failed to create main window")?;
+    app.as_weak().upgrade_in_event_loop(|win| {
+        utils::center_win::center_window(win.window());
+    })?;
+    app.run()?;
     Ok(ExitCode::SUCCESS)
 }
