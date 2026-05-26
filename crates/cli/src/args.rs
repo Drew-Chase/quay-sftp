@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use quay_lib::SupportedProtocals::SupportedProtocols;
+use quay_lib::supported_protocols::SupportedProtocols;
 
 #[derive(Debug, clap::Parser)]
 #[command(name = "quay", about = "A multi-protocol file transfer CLI", author, version)]
