@@ -22,3 +22,7 @@ clean:
 
 installer: build
     makensis ./nsis/_entrypoint.nsi
+
+# Runs either the desktop or cli with the specified arguments
+dev platform="desktop" args="":
+    cargo run --bin {{ if platform == "desktop" { "quay_sftp" } else { "quay" } }} -- {{ args }}
