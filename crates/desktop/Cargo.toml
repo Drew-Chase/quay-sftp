@@ -5,7 +5,12 @@ edition = "2024"
 authors = ["Drew Chase"]
 
 [dependencies]
-slint = { version = "1.16.1" }
+# Windowing Crates
+slint = { version = "=1.16.1", features = ["backend-winit", "renderer-skia"] }
+i-slint-backend-winit = {version = "=1.16.1"}
+winit = { version = "0.30.13" }
+
+# Internal Plumbing
 quay_cli = { path = "../cli" }
 quay_lib = { path = "../lib" }
 
@@ -13,3 +18,13 @@ quay_lib = { path = "../lib" }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 color-eyre = { workspace = true }
+
+[build-dependencies]
+slint-build = { version = "1.16.1" }
+
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
