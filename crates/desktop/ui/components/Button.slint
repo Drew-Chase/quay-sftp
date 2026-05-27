@@ -1,0 +1,30 @@
+import { Layout } from "../themes/layout.slint";
+import { Theme } from "../themes/theme.slint";
+export component Button inherits TouchArea {
+    // variables
+    in property <length> radius: Layout.radius.lg;
+    in property <brush> background: Theme.palette.hero.primary.base;
+    in property <brush> foreground: Theme.palette.hero.primary.fg;
+    in property <length> font-size: Layout.text.base;
+    in property <int> font-weight: Layout.weight.normal;
+    in property <string> font-family: Layout.font.sans;
+    in property <string> text: "Click Me!";
+    in-out property <bool> is_hovering: false;
+
+    // Default values
+    width: 100px;
+    height: 40px;
+    mouse-cursor: MouseCursor.pointer;
+
+    Rectangle {
+        background: background;
+        border-radius: radius;
+        Text {
+            text: text;
+            color: foreground;
+            font-size: font-size;
+            font-weight: font-weight;
+            font-family: font-family;
+        }
+    }
+}
