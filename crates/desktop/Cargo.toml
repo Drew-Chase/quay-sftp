@@ -7,7 +7,7 @@ authors = ["Drew Chase"]
 [dependencies]
 # Windowing Crates
 slint = { version = "=1.16.1", features = ["backend-winit", "renderer-skia"] }
-i-slint-backend-winit = {version = "=1.16.1"}
+i-slint-backend-winit = { version = "=1.16.1" }
 winit = { version = "0.30.13" }
 
 # Internal Plumbing
