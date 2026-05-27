@@ -1,11 +1,43 @@
+import { Theme } from "themes/theme.slint";
+import { Button } from "components/Button.slint";
+import { Layout } from "themes/layout.slint";
+import { VerticalBox } from "std-widgets.slint";
+
 export component MainWindow inherits Window {
     title: "quay sftp";
     preferred-width: 1280px;
     preferred-height: 720px;
     min-width: 800px;
     min-height: 400px;
-    Text {
-        color: white;
-        text: "Hello World";
+    background: Theme.palette.surface.base;
+
+    VerticalBox {
+        Text {
+            text: "Welcome!";
+            color: Theme.palette.ink.primary;
+            font-size: Layout.text.display;
+        }
+
+        Text {
+            text: "Sans Font!";
+            color: Theme.palette.ink.primary;
+            font-size: Layout.text.xl;
+            font-family: Layout.font.sans;
+        }
+
+        Text {
+            text: "Mono Font!";
+            color: Theme.palette.ink.primary;
+            font-size: Layout.text.xl;
+            font-family: Layout.font.mono;
+        }
+
+        Button {
+            text: "Toggle Theme";
+            radius: Layout.radius.xl;
+            clicked => {
+                Theme.dark-mode = !Theme.dark-mode;
+            }
+        }
     }
 }
