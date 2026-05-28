@@ -9,6 +9,7 @@ authors = ["Drew Chase"]
 slint = { version = "=1.16.1", features = ["backend-winit", "renderer-skia"] }
 i-slint-backend-winit = { version = "=1.16.1" }
 winit = { version = "0.30.13" }
+slint_borderless_windows = { version = "0.1.1" }
 
 # Internal Plumbing
 quay_cli = { path = "../cli" }
@@ -19,9 +20,21 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 color-eyre = { workspace = true }
 
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.62.2", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Dwm",
+    "Win32_UI_Controls",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Shell",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Threading",
+] }
+
 [build-dependencies]
 slint-build = { version = "1.16.1" }
-
+winresource = { version = "0.1.31" } # For adding the icon on build.
 
 [profile.release]
 codegen-units = 1
