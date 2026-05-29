@@ -26,13 +26,8 @@ export component MainWindow inherits Window {
     default-font-family: Layout.font.sans;
     default-font-size: Layout.text.base;
     default-font-weight: Layout.weight.normal;
+    Titlebar { }
 
-    VerticalLayout {
-        padding: 0px;
-        spacing: 0px;
-
-        Titlebar { }
-        // Pages
-        ConnectionsPage { }
-    }
+    // Pages
+    ConnectionsPage { }
 }
