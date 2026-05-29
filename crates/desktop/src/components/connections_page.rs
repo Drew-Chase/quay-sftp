@@ -1,5 +1,3 @@
-use crate::{ConnectionsPageEvents, MainWindow};
-use slint::ComponentHandle;
-use tracing::info;
+use crate::MainWindow;
 
-pub fn handle_connections_page_events(app: &MainWindow) {}
+pub fn handle_connections_page_events(_app: &MainWindow) {}
