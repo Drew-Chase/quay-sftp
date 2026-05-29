@@ -35,9 +35,3 @@ windows = { version = "0.62.2", features = [
 [build-dependencies]
 slint-build = { version = "1.16.1" }
 winresource = { version = "0.1.31" } # For adding the icon on build.
-
-[profile.release]
-codegen-units = 1
-lto = true
-opt-level = "s"
-strip = true

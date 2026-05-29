@@ -5,7 +5,7 @@ fn main() {
 
 fn slint_build() {
     let path = "ui/main_window.slint";
-    println!("cargo:rerun-if-changed={}", path);
+    println!("cargo:rerun-if-changed=ui");
     unsafe {
         std::env::set_var("SLINT_BACKEND", "winit-skia");
     }

@@ -7,3 +7,10 @@ members = ["crates/lib", "crates/cli", "crates/desktop"]
 color-eyre = {version = "0.6.5", features = ["issue-url", "track-caller"]}
 tracing = {version = "0.1.44", features = ["async-await"]}
 tracing-subscriber = {version = "0.3.23", features = ["ansi"]}
+
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
