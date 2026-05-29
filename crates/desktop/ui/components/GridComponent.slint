@@ -1,3 +1,33 @@
+import { Theme } from "../themes/theme.slint";
 export component GridComponent {
-    
+    property <color> line-color: red;
+    property <length> cell-size: 56px;
+    height: 100%;
+    width: 100%;
+
+    // Vertical Lines
+    for i in Math.ceil(root.width / root.cell-size): Path {
+        x: i * root.cell-size;
+        y: 0;
+        width: 1px;
+        height: root.height;
+        commands: "M 0 0 L 0 1";
+        viewbox-width: 1;
+        viewbox-height: 1;
+        stroke: root.line-color;
+        stroke-width: 1px;
+    }
+
+    // Horizontal lines
+    for i in Math.ceil(root.height / root.cell-size): Path {
+        x: 0;
+        y: i * root.cell-size;
+        width: root.width;
+        height: 1px;
+        commands: "M 0 0 L 1 0";
+        viewbox-width: 1;
+        viewbox-height: 1;
+        stroke: root.line-color;
+        stroke-width: 1px;
+    }
 }
