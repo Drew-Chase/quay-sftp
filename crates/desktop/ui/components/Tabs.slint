@@ -1,3 +1,143 @@
-export component Tabs {
-    
+import { Theme } from "../themes/theme.slint";
+import { Layout } from "../themes/layout.slint";
+
+export struct TabItem {
+    key: string,
+    label: string,
+    badge: int,
+}
+
+export enum TabVariant {
+    filled,
+    outlined,
+    underlined
+}
+
+export component Tabs inherits Rectangle {
+    in property <[TabItem]> tabs;
+    in property <TabVariant> variant: TabVariant.filled;
+    in-out property <int> selected-index: 0;
+
+    callback tab-selected(int);
+
+    property <length> tab-width: 64px;
+    property <length> tab-height: 28px;
+    property <length> tab-padding: 4px;
+
+    // Variant-derived visuals
+    property <length> effective-padding:
+        variant == TabVariant.underlined ? 0px : tab-padding;
+    property <brush> container-bg:
+        variant == TabVariant.filled ? Theme.palette.surface.level2 : variant == TabVariant.outlined ? transparent : transparent;
+    property <brush> container-border:
+        variant == TabVariant.filled ? Theme.palette.hairline.subtle : variant == TabVariant.outlined ? Theme.palette.hairline.strong : transparent;
+    property <length> container-border-width:
+        variant == TabVariant.underlined ? 0px : Layout.border.thin;
+    property <length> container-radius:
+        variant == TabVariant.underlined ? 0px : Layout.radius.full;
+
+    property <length> total-width:
+        effective-padding + (tab-width * tabs.length) + (effective-padding * (tabs.length > 0 ? tabs.length - 1 : 0)) + effective-padding;
+
+    width: total-width;
+    height: variant == TabVariant.underlined ? tab-height : tab-height + (effective-padding * 2);
+    border-radius: container-radius;
+    background: container-bg;
+    border-color: container-border;
+    border-width: container-border-width;
+
+    // ── Sliding cursor (rendered first → behind labels) ──────────────
+    if variant == TabVariant.filled || variant == TabVariant.outlined: Rectangle {
+        x: root.effective-padding + (root.tab-width + root.effective-padding) * root.selected-index;
+        y: root.effective-padding;
+        width: root.tab-width;
+        height: root.tab-height;
+        border-radius: Layout.radius.full;
+        background: root.variant == TabVariant.filled ? Theme.palette.accent.base : transparent;
+        border-color: root.variant == TabVariant.outlined ? Theme.palette.accent.base : transparent;
+        border-width: root.variant == TabVariant.outlined ? Layout.border.thin : 0px;
+
+        animate x {
+            duration: Layout.duration.normal;
+            easing: ease-in-out;
+        }
+    }
+
+    // ── Underline cursor ─────────────────────────────────────────────
+    if variant == TabVariant.underlined: Rectangle {
+        x: (root.tab-width + root.effective-padding) * root.selected-index;
+        y: root.tab-height - 2px;
+        width: root.tab-width;
+        height: 2px;
+        background: Theme.palette.accent.base;
+        border-radius: 1px;
+
+        animate x {
+            duration: Layout.duration.normal;
+            easing: ease-in-out;
+        }
+    }
+
+    // ── Bottom hairline for underlined variant ───────────────────────
+    if variant == TabVariant.underlined: Rectangle {
+        x: 0;
+        y: root.tab-height - 1px;
+        width: root.total-width;
+        height: 1px;
+        background: Theme.palette.hairline.subtle;
+    }
+
+    // ── Tab labels ───────────────────────────────────────────────────
+    for tab[i] in root.tabs: Rectangle {
+        x: root.effective-padding + (root.tab-width + root.effective-padding) * i;
+        y: root.variant == TabVariant.underlined ? 0px : root.effective-padding;
+        width: root.tab-width;
+        height: root.tab-height;
+
+        HorizontalLayout {
+            alignment: center;
+            spacing: 4px;
+
+            Text {
+                text: tab.label;
+                font-family: Layout.font.sans;
+                font-size: Layout.text.xs;
+                font-weight: Layout.weight.medium;
+                vertical-alignment: center;
+                color: root.selected-index == i ? root.variant == TabVariant.filled ? Theme.palette.accent.ink : Theme.palette.accent.base : Theme.palette.ink.ink02;
+
+                animate color { duration: Layout.duration.fast; }
+            }
+
+            // Badge
+            if tab.badge > 0: Rectangle {
+                width: badge-text.width + 8px;
+                height: 16px;
+                border-radius: Layout.radius.full;
+                background: root.selected-index == i ? root.variant == TabVariant.filled ? Theme.palette.accent.ink.with-alpha(0.25) : Theme.palette.accent.soft : Theme.palette.surface.level3;
+
+                animate background { duration: Layout.duration.fast; }
+
+                badge-text := Text {
+                    text: tab.badge;
+                    font-family: Layout.font.sans;
+                    font-size: Layout.text.xxs;
+                    font-weight: Layout.weight.semibold;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                    color: root.selected-index == i ? root.variant == TabVariant.filled ? Theme.palette.accent.ink : Theme.palette.accent.base : Theme.palette.ink.ink03;
+
+                    animate color { duration: Layout.duration.fast; }
+                }
+            }
+        }
+
+        TouchArea {
+            mouse-cursor: MouseCursor.pointer;
+            clicked => {
+                root.selected-index = i;
+                root.tab-selected(i);
+            }
+        }
+    }
 }
