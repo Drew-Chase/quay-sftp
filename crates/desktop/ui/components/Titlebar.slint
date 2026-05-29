@@ -1,5 +1,6 @@
 import { Theme } from "../themes/theme.slint";
 import { Layout } from "../themes/layout.slint";
+import { ApplicationState } from "../application_state.slint";
 export global WindowControls {
     callback minimize();
     callback maximize();
@@ -8,7 +9,6 @@ export global WindowControls {
     callback double-click();
 
     in-out property <bool> maximized: false;
-    in property <string> version: "0.0.0";
 }
 
 export component Titlebar inherits Rectangle {
@@ -50,7 +50,7 @@ export component Titlebar inherits Rectangle {
                 }
 
                 Text {
-                    text: "QUAY . v\{WindowControls.version}";
+                    text: "QUAY . v\{ApplicationState.version}";
                     font-size: 0.8rem;
                     vertical-alignment: center;
                     horizontal-alignment: center;

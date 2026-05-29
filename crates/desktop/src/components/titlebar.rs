@@ -1,4 +1,4 @@
-use crate::{MainWindow, WindowControls};
+use crate::{ApplicationState, MainWindow, WindowControls};
 use slint::{ComponentHandle, ToSharedString};
 use slint_borderless_windows::TitlebarSetup;
 
@@ -14,7 +14,7 @@ pub fn handle_titlebar_events(app: &MainWindow) {
     app.global::<WindowControls>().on_drag(move || frame_drag.drag());
     app.global::<WindowControls>().on_double_click(move || frame_dblclick.toggle_maximized());
     app.global::<WindowControls>().on_minimize(move || frame.minimize());
-    app.global::<WindowControls>().set_version(
+    app.global::<ApplicationState>().set_version(
         format!("{}{}", env!("CARGO_PKG_VERSION"),
                 {
                     #[cfg(debug_assertions)]

@@ -7,7 +7,9 @@ import {
     ConnectionsPageEvents,
 } from "pages/connections.slint";
 import { Titlebar, WindowControls } from "components/Titlebar.slint";
-export {WindowControls, ConnectionsPageEvents}
+import { ApplicationState } from "application_state.slint";
+export {WindowControls, ConnectionsPageEvents, ApplicationState}
+
 export component MainWindow inherits Window {
     // Window Properties
     title: "quay sftp";
