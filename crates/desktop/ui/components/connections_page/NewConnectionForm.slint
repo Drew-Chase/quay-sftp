@@ -1,3 +1,47 @@
-export component NewConnectionForm {
-    
+import { Layout } from "../../themes/layout.slint";
+import { Theme } from "../../themes/theme.slint";
+import { Tabs, TabVariant } from "../Tabs.slint";
+import { Input } from "../Input.slint";
+export component NewConnectionForm inherits Rectangle {
+    property <int> selected-protocol;
+    border-radius: Layout.radius.lg;
+    background: Theme.palette.surface.level1;
+    border-color: Theme.palette.hairline.strong;
+    border-width: 1px;
+    drop-shadow-color: Theme.palette.surface.base;
+    drop-shadow-blur: 20px;
+    max-height: 900px;
+    width: 50%;
+    max-width: 900px;
+    VerticalLayout {
+        padding: 1rem;
+        HorizontalLayout {
+            VerticalLayout {
+                alignment: center;
+                Text {
+                    text: "QUICK CONNECT";
+                    font-size: Layout.text.sm;
+                    color: Theme.palette.ink.ink03;
+                }
+            }
+
+            Tabs {
+                tabs: [
+                    { key: "sftp", label: "SFTP" },
+                    { key: "ftp", label: "FTP" },
+                    { key: "s3", label: "S3" },
+                ];
+                selected-index <=> selected-protocol;
+                tab-selected(i) => { /* handle selection */ }
+            }
+        }
+
+        VerticalLayout {
+            Input {
+                label: "HOST";
+                placeholder: "user@hostname or hostname";
+                description: "Test description";
+            }
+        }
+    }
 }

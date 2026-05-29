@@ -34,7 +34,20 @@ export component MainWindow inherits Window {
         y: 0px;
         height: parent.height - self.y;
         width: 100%;
-        ConnectionsPage { }
+        FocusScope {
+            width: 100%;
+            height: 100%;
+            TouchArea {
+                z: -1;
+                width: 100%;
+                height: 100%;
+                clicked => {
+                    parent.focus();
+                }
+            }
+
+            ConnectionsPage { }
+        }
     }
 
     // Topmost rendered component
