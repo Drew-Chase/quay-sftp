@@ -1,0 +1,58 @@
+
+import { Layout } from "../themes/layout.slint";
+import { Theme } from "../themes/theme.slint";
+export component Input {
+    in property <string> label;
+    in property <string> placeholder;
+    in property <string> description;
+    in property <bool> required: false;
+    in-out property <string> value: "";
+
+    height: 100px;
+    Rectangle {
+        y: 28px;
+        background: Theme.palette.surface.level2;
+        border-width: 1px;
+        border-color: Theme.palette.hairline.strong;
+        border-radius: Layout.radius.lg;
+        height: 40px;
+    }
+
+    if value == "": Text {
+        y: 28px;
+        text: placeholder;
+        x: 10px;
+        height: 40px;
+        font-size: Layout.text.sm;
+        color: Theme.palette.ink.ink03;
+        vertical-alignment: center;
+    }
+
+    VerticalLayout {
+        height: 85px;
+        spacing: 5px;
+        Text {
+            text: label;
+            font-size: Layout.text.xxs;
+            color: Theme.palette.ink.ink03;
+        }
+
+        TextInput {
+            x: 10px;
+            height: 40px;
+            vertical-alignment: center;
+            text: value;
+            single-line: true;
+            edited => {
+                root.value = self.text;
+            }
+        }
+
+        Text {
+            text: description;
+            font-size: Layout.text.xxs;
+            color: Theme.palette.ink.ink03;
+            font-family: Layout.font.mono;
+        }
+    }
+}
