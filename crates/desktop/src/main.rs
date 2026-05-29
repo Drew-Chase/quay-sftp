@@ -5,10 +5,10 @@ pub mod utils;
 
 slint::include_modules!();
 
-use color_eyre::Result;
+use crate::components::handle_component_events;
 use color_eyre::eyre::Context;
+use color_eyre::Result;
 use slint::{PhysicalSize, WindowSize};
-use slint_borderless_windows::{TitlebarSetup};
 use std::process::ExitCode;
 
 fn main() -> Result<ExitCode> {
@@ -25,18 +25,8 @@ fn main() -> Result<ExitCode> {
         utils::center_win::center_window(win.window());
     })?;
 
-    let frame = app.as_weak().setup_borderless().expect("Failed to setup custom frame");
-    let frame_maximize = frame.clone();
-    let frame_close = frame.clone();
-    let frame_drag = frame.clone();
-    let frame_dblclick = frame.clone();
-
-    app.global::<WindowControls>().on_maximize(move || frame_maximize.toggle_maximized());
-    app.global::<WindowControls>().on_close(move || frame_close.close());
-    app.global::<WindowControls>().on_drag(move || frame_drag.drag());
-    app.global::<WindowControls>().on_double_click(move || frame_dblclick.toggle_maximized());
-    app.global::<WindowControls>().on_minimize(move || frame.minimize());
-
+    handle_component_events(&app);
+    
     app.run()?;
     Ok(ExitCode::SUCCESS)
 }

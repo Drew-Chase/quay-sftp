@@ -1,10 +1,13 @@
 import { Theme } from "themes/theme.slint";
-import { Button } from "components/button.slint";
+import { Button } from "components/Button.slint";
 import { Layout } from "themes/layout.slint";
 import { VerticalBox } from "std-widgets.slint";
-import { ConnectionsPage } from "pages/connections.slint";
-import { Titlebar, WindowControls } from "components/titlebar.slint";
-export {WindowControls}
+import {
+    ConnectionsPage,
+    ConnectionsPageEvents,
+} from "pages/connections.slint";
+import { Titlebar, WindowControls } from "components/Titlebar.slint";
+export {WindowControls, ConnectionsPageEvents}
 export component MainWindow inherits Window {
     // Window Properties
     title: "quay sftp";
@@ -28,9 +31,7 @@ export component MainWindow inherits Window {
         padding: 0px;
         spacing: 0px;
 
-        Titlebar {
-            title: "quay sftp";
-        }
+        Titlebar { }
         // Pages
         ConnectionsPage { }
     }
