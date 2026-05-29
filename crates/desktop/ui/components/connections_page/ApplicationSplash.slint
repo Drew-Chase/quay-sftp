@@ -1,20 +1,26 @@
 import { Layout } from "../../themes/layout.slint";
 import { Theme } from "../../themes/theme.slint";
+import { FloatingLogo } from "FloatingLogo.slint";
 export component ApplicationSplash {
     width: 26rem;
     VerticalLayout {
         x: 0px;
         y: 0px;
+        FloatingLogo {
+            x: -20px;
+        }
+
         Text {
             text: "Quay";
             font-size: Layout.text.display;
+            font-weight: Layout.weight.bold;
             height: 75px;
             Rectangle {
                 width: 10px;
                 height: 10px;
                 background: Theme.palette.hero.primary.base;
                 border-radius: 100px;
-                x: 135px;
+                x: 145px;
                 y: 50px;
             }
         }
