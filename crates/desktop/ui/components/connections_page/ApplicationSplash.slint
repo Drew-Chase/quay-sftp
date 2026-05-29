@@ -1,14 +1,13 @@
 import { Layout } from "../../themes/layout.slint";
 import { Theme } from "../../themes/theme.slint";
 import { FloatingLogo } from "FloatingLogo.slint";
+import { ApplicationState } from "../../application_state.slint";
 export component ApplicationSplash {
     width: 26rem;
     VerticalLayout {
-        x: 0px;
-        y: 0px;
-        FloatingLogo {
-            x: -20px;
-        }
+        x: 10px;
+        y: 50px;
+        FloatingLogo { }
 
         Text {
             text: "Quay";
@@ -25,13 +24,75 @@ export component ApplicationSplash {
             }
         }
 
-        Text {
+        VerticalLayout {
             height: 50px;
-            text: "A modern SFTP, FTP, and cloud storage explorer with a built-in shell and code editor — designed for keyboards, made for the dark.";
-            font-size: Layout.text.lg;
-            color: Theme.palette.ink.ink03;
-            wrap: TextWrap.word-wrap;
-            letter-spacing: Layout.tracking.wide;
+            spacing: 5px;
+            Text {
+                text: "A modern SFTP, FTP, and cloud storage explorer";
+                font-size: Layout.text.lg;
+                color: Theme.palette.ink.ink03;
+                wrap: TextWrap.word-wrap;
+                letter-spacing: Layout.tracking.wide;
+            }
+
+            Text {
+                text: "with a built-in shell and code editor — designed";
+                font-size: Layout.text.lg;
+                color: Theme.palette.ink.ink03;
+                wrap: TextWrap.word-wrap;
+                letter-spacing: Layout.tracking.wide;
+            }
+
+            Text {
+                text: "for keyboards, made for the dark.";
+                font-size: Layout.text.lg;
+                color: Theme.palette.ink.ink03;
+                wrap: TextWrap.word-wrap;
+                letter-spacing: Layout.tracking.wide;
+            }
+        }
+
+        HorizontalLayout {
+            padding-top: 2rem;
+            height: 3.5rem;
+            spacing: 10px;
+            VerticalLayout {
+                alignment: center;
+                Rectangle {
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 100px;
+                    background: Theme.palette.semantic.ok;
+                }
+            }
+
+            TouchArea {
+                width: 70px;
+                mouse-cursor: MouseCursor.pointer;
+                Text {
+                    text: "No Updates";
+                    color: Theme.palette.ink.ink03;
+                    font-size: Layout.text.sm;
+                    font-family: Layout.font.mono;
+                }
+            }
+
+            VerticalLayout {
+                alignment: center;
+                Rectangle {
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 100px;
+                    background: Theme.palette.accent.glow;
+                }
+            }
+
+            Text {
+                text: "v\{ApplicationState.version}";
+                color: Theme.palette.ink.ink03;
+                font-size: Layout.text.sm;
+                font-family: Layout.font.mono;
+            }
         }
     }
 }
