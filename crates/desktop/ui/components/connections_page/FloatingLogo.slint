@@ -26,9 +26,9 @@ export component FloatingLogo {
 
     Rectangle {
         y: root.bounce-y;
-        background: @radial-gradient(circle, Theme.palette.accent.glow 20%, transparent 75%);
-        width: root.width;
-        height: root.height;
+        background: @radial-gradient(circle, Theme.palette.accent.glow 0%, transparent 70%);
+        width: root.width + 10px;
+        height: root.height + 10px;
     }
 
     Image {
