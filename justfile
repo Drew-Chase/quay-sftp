@@ -13,8 +13,8 @@ install:
     cargo install update-version --locked
 
 # Builds the application for the host platform
-build: install
-    cargo build --workspace --release
+build args="": install
+    cargo build --workspace --release {{args}}
 
 # This will clean the rust target directory and remove the node_modules directory
 clean:
