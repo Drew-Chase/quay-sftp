@@ -15,6 +15,7 @@ import {
 import {
     ConnectionsFooter,
 } from "../components/connections_page/ConnectionsFooter.slint";
+import { ApplicationState } from "../application_state.slint";
 
 export global ConnectionsPageEvents { }
 
@@ -27,13 +28,13 @@ export component ConnectionsPage {
     vertical-stretch: 1;
 
     // Background Decoration
-    GridComponent {
-        width: 50%;
+   GridComponent {
+        width: ApplicationState.window-width >= 1000px ? 50% : 100%;
         x: 0;
     }
 
     Rectangle {
-        x: -500px;
+        x: ApplicationState.window-width >= 1000px ? -500px : -200px;
         y: (parent.height - self.height) / 2;
         width: 100%;
         height: 100%;
@@ -55,7 +56,9 @@ export component ConnectionsPage {
         vertical-stretch: 1;
 
         // Left side
+        if ApplicationState.window-width >= 1000px:
         VerticalLayout {
+            horizontal-stretch: 1;
             padding: 60px;
             padding-left: 56px;
             padding-right: 56px;
@@ -78,6 +81,7 @@ export component ConnectionsPage {
 
         // Right side
         VerticalLayout {
+            horizontal-stretch: 2;
             padding: 15px;
             padding-top: 50px;
             ConnectionsList { }

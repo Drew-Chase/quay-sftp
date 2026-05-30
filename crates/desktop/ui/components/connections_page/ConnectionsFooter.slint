@@ -16,8 +16,18 @@ export component ConnectionsFooter {
         padding-bottom: 20px;
         padding-right: 15px;
         spacing: 25px;
+
+        if ApplicationState.window-width >= 1300px || ApplicationState.window-width < 1000px:
         Text {
             text: "Quay v\{ApplicationState.version} - Build \{ApplicationState.build}";
+            font-family: Layout.font.mono;
+            color: Theme.palette.ink.ink03;
+            font-size: Layout.text.xs;
+        }
+
+        if ApplicationState.window-width >= 1000px && ApplicationState.window-width < 1300px:
+        Text {
+            text: "Quay v\{ApplicationState.version}";
             font-family: Layout.font.mono;
             color: Theme.palette.ink.ink03;
             font-size: Layout.text.xs;
@@ -36,10 +46,12 @@ export component ConnectionsFooter {
             text: "Docs";
             url: "https://quayapp.com/docs/\{ApplicationState.version}";
         }
+
         Link {
             text: "Manage devices";
             url: "https://quayapp.com/account/devices";
         }
+
         Link {
             text: "Login";
             url: "https://quayapp.com/login";
