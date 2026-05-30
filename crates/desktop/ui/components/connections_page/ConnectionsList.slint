@@ -1,3 +1,28 @@
+import { Layout } from "../../themes/layout.slint";
+import { Button, Color } from "../Button.slint";
 export component ConnectionsList {
-    
+    VerticalLayout {
+        HorizontalLayout {
+            spacing: 10px;
+            Text {
+                text: "Saved conections";
+                font-size: Layout.text.xxxl;
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            Button {
+                text: "Import";
+                start-icon: @image-url("../../../../../res/icons/lucide--upload.svg");
+            }
+
+            Button {
+                text: "New Connection";
+                start-icon: @image-url("../../../../../res/icons/lucide--plus.svg");
+                color: Color.primary;
+            }
+        }
+    }
 }

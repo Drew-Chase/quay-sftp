@@ -53,6 +53,8 @@ export component ConnectionsPage {
         height: 100%;
         horizontal-stretch: 1;
         vertical-stretch: 1;
+
+        // Left side
         VerticalLayout {
             padding: 60px;
             padding-left: 56px;
@@ -68,13 +70,16 @@ export component ConnectionsPage {
             NewConnectionForm { }
         }
 
+        // Spacer
         Rectangle {
             background: hsv(160, 50%, 2%);
             width: 1px;
         }
 
+        // Right side
         VerticalLayout {
-            padding: 10px;
+            padding: 15px;
+            padding-top: 50px;
             ConnectionsList { }
 
             Rectangle {
