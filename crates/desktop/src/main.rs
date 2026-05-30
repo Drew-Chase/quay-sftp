@@ -2,6 +2,7 @@
 
 mod components;
 pub mod utils;
+mod application_state;
 
 slint::include_modules!();
 
@@ -24,7 +25,7 @@ fn main() -> Result<ExitCode> {
     app.as_weak().upgrade_in_event_loop(|win| {
         utils::center_win::center_window(win.window());
     })?;
-
+    application_state::setup_application_state(&app);
     handle_component_events(&app);
     
     app.run()?;

@@ -1,3 +1,8 @@
-export global ApplicationState{
+export global ApplicationState {
+    // Application Metadata
     in-out property <string> version: "0.0.0";
+    in-out property <string> build: "2026.5.17.123456";
+
+    // Callbacks
+    callback open-url(string);
 }
