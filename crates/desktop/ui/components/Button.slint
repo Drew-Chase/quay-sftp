@@ -1,30 +1,70 @@
 import { Layout } from "../themes/layout.slint";
 import { Theme } from "../themes/theme.slint";
+
+export enum Variant{
+    solid,
+    ghost,
+    light,
+    faded
+}
+
+export enum Color{
+    default,
+    primary
+}
+
 export component Button inherits TouchArea {
     // variables
     in property <length> radius: Layout.radius.lg;
-    in property <brush> background: Theme.palette.hero.primary.base;
-    in property <brush> foreground: Theme.palette.hero.primary.fg;
     in property <length> font-size: Layout.text.base;
     in property <int> font-weight: Layout.weight.normal;
     in property <string> font-family: Layout.font.sans;
     in property <string> text: "Click Me!";
     in-out property <bool> is_hovering: false;
+    in property <image> start-icon;
+    in property <image> end-icon;
+    in property <Color> color: Color.default;
+
+    private property <brush> background: color == Color.primary ? Theme.palette.hero.primary.base : Theme.palette.hero.content.c3.bg;
+    private property <brush> hover-background: color == Color.primary ? Theme.palette.hero.primary.c600 : Theme.palette.hero.content.c2.bg;
+    private property <brush> foreground: color == Color.primary ? Theme.palette.hero.primary.fg : Theme.palette.ink.ink01;
 
     // Default values
-    width: 100px;
-    height: 40px;
     mouse-cursor: MouseCursor.pointer;
 
     Rectangle {
-        background: background;
+        background: root.has-hover ? hover-background : background;
         border-radius: radius;
-        Text {
-            text: text;
-            color: foreground;
-            font-size: font-size;
-            font-weight: font-weight;
-            font-family: font-family;
+        animate background { duration: 100ms; }
+
+        HorizontalLayout {
+            padding: 10px;
+            spacing: 10px;
+            alignment: center;
+
+            if start-icon.width > 0 && start-icon.height > 0: Image {
+                source: start-icon;
+                width: font-size;
+                height: font-size;
+                vertical-stretch: 0;
+                colorize: foreground;
+            }
+
+            Text {
+                text: text;
+                color: foreground;
+                font-size: font-size;
+                font-weight: font-weight;
+                font-family: font-family;
+            }
+
+            if end-icon.width > 0 && end-icon.height > 0: Image {
+                source: end-icon;
+                width: font-size;
+                height: font-size;
+                vertical-stretch: 0;
+                colorize: foreground;
+            }
         }
     }
 }
