@@ -1,3 +1,30 @@
+import { Layout } from "../themes/layout.slint";
+import { Theme } from "../themes/theme.slint";
+import { ApplicationState } from "../application_state.slint";
 export component Link {
-    
+    in property <string> text;
+    in property <string> url;
+
+    Rectangle {
+        width: root.width + 20px;
+        height: root.height + 15px;
+        border-radius: Layout.radius.sm;
+        background: link-area.has-hover ? Theme.palette.surface.level2 : transparent;
+        animate background { duration: 100ms; }
+        link-area := TouchArea {
+            mouse-cursor: MouseCursor.pointer;
+
+            clicked => {
+                ApplicationState.open-url(root.url);
+            }
+
+            Text {
+                text: root.text;
+                font-family: Layout.font.mono;
+                color: link-area.has-hover ? Theme.palette.ink.ink02 : Theme.palette.ink.ink03;
+                font-size: Layout.text.xs;
+                animate color { duration: 100ms; }
+            }
+        }
+    }
 }

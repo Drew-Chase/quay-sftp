@@ -1,3 +1,48 @@
+import { ApplicationState } from "../../application_state.slint";
+import { Layout } from "../../themes/layout.slint";
+import { Theme } from "../../themes/theme.slint";
+import { Link } from "../Link.slint";
+
 export component ConnectionsFooter {
-    
+
+    Rectangle {
+        y: -20px;
+        height: 1px;
+        width: 100%;
+        background: #101213;
+    }
+
+    HorizontalLayout {
+        padding-bottom: 20px;
+        padding-right: 15px;
+        spacing: 25px;
+        Text {
+            text: "Quay v\{ApplicationState.version} - Build \{ApplicationState.build}";
+            font-family: Layout.font.mono;
+            color: Theme.palette.ink.ink03;
+            font-size: Layout.text.xs;
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+        }
+
+        Link {
+            text: "What's New";
+            url: "https://quayapp.com/whats-new/\{ApplicationState.version}";
+        }
+
+        Link {
+            text: "Docs";
+            url: "https://quayapp.com/docs/\{ApplicationState.version}";
+        }
+        Link {
+            text: "Manage devices";
+            url: "https://quayapp.com/account/devices";
+        }
+        Link {
+            text: "Login";
+            url: "https://quayapp.com/login";
+        }
+    }
 }

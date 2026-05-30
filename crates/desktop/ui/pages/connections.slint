@@ -9,6 +9,12 @@ import {
 import {
     NewConnectionForm,
 } from "../components/connections_page/NewConnectionForm.slint";
+import {
+    ConnectionsList,
+} from "../components/connections_page/ConnectionsList.slint";
+import {
+    ConnectionsFooter,
+} from "../components/connections_page/ConnectionsFooter.slint";
 
 export global ConnectionsPageEvents { }
 
@@ -20,15 +26,18 @@ export component ConnectionsPage {
     horizontal-stretch: 1;
     vertical-stretch: 1;
 
-
     // Background Decoration
-    GridComponent { }
+    GridComponent {
+        width: 50%;
+        x: 0;
+    }
 
     Rectangle {
-        x: -700px;
-        width: 1920px;
-        height: 1080px;
-        background: @radial-gradient(circle, rgba(33,200,255,0.07) 0%, transparent 80%);
+        x: -500px;
+        y: (parent.height - self.height) / 2;
+        width: 100%;
+        height: 100%;
+        background: @radial-gradient(circle, rgba(33,200,255,0.07) 0%, transparent 50%);
     }
 
     Rectangle {
@@ -52,12 +61,27 @@ export component ConnectionsPage {
 
             ApplicationSplash { }
 
-            // Spacer equivalent to "my-auto"
             Rectangle {
                 vertical-stretch: 1;
             }
 
             NewConnectionForm { }
+        }
+
+        Rectangle {
+            background: hsv(160, 50%, 2%);
+            width: 1px;
+        }
+
+        VerticalLayout {
+            padding: 10px;
+            ConnectionsList { }
+
+            Rectangle {
+                vertical-stretch: 1;
+            }
+
+            ConnectionsFooter { }
         }
     }
 }
