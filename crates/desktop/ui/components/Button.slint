@@ -3,8 +3,9 @@ import { Theme } from "../themes/theme.slint";
 
 export enum Variant{
     solid,
-    ghost,
     light,
+    bordered,
+    ghost,
     faded
 }
 
@@ -13,57 +14,111 @@ export enum Color{
     primary
 }
 
+export enum Size{
+    sm,
+    md,
+    lg
+}
+
 export component Button inherits TouchArea {
     // variables
     in property <length> radius: Layout.radius.lg;
     in property <length> font-size: Layout.text.base;
     in property <int> font-weight: Layout.weight.normal;
     in property <string> font-family: Layout.font.sans;
-    in property <string> text: "Click Me!";
+    in property <string> text: "";
     in-out property <bool> is_hovering: false;
     in property <image> start-icon;
     in property <image> end-icon;
     in property <Color> color: Color.default;
+    in property <Size> size: Size.md;
+    in property <Variant> variant: Variant.solid;
 
-    private property <brush> background: color == Color.primary ? Theme.palette.hero.primary.base : Theme.palette.hero.content.c3.bg;
-    private property <brush> hover-background: color == Color.primary ? Theme.palette.hero.primary.c600 : Theme.palette.hero.content.c2.bg;
-    private property <brush> foreground: color == Color.primary ? Theme.palette.hero.primary.fg : Theme.palette.ink.ink01;
+    // Base color tokens (resolved from `color` property)
+    private property <color> tint: color == Color.primary ? Theme.palette.hero.primary.base : Theme.palette.ink.ink02;
+    private property <brush> on-solid: color == Color.primary ? Theme.palette.hero.primary.fg : Theme.palette.ink.ink01;
+    private property <brush> solid-bg: color == Color.primary ? Theme.palette.hero.primary.base : Theme.palette.hero.content.c3.bg;
+    private property <brush> solid-hover-bg: color == Color.primary ? Theme.palette.hero.primary.c600 : Theme.palette.hero.content.c2.bg;
+    private property <brush> light-hover-bg: color == Color.primary ? Theme.palette.hero.primary.c200 : Theme.palette.hero.content.c3.bg;
+
+    // Variant-resolved background
+    private property <brush> resolved-bg:
+        variant == Variant.solid ? solid-bg :
+        variant == Variant.faded ? tint.with-alpha(0.2) :
+        transparent;
+
+    private property <brush> resolved-bg-hover:
+        variant == Variant.solid ? solid-hover-bg :
+        variant == Variant.light ? light-hover-bg :
+        variant == Variant.ghost ? solid-bg :
+        variant == Variant.faded ? tint.with-alpha(0.3) :
+        transparent;
+
+    // Variant-resolved foreground
+    private property <brush> resolved-fg:
+        variant == Variant.solid ? on-solid :
+        variant == Variant.bordered || variant == Variant.ghost ? tint :
+        color == Color.primary ? tint : on-solid;
+
+    private property <brush> resolved-fg-hover:
+        variant == Variant.ghost ? on-solid : resolved-fg;
+
+    // Border (only bordered + ghost)
+    private property <length> resolved-border-width:
+        variant == Variant.bordered || variant == Variant.ghost ? Layout.border.thin : 0px;
 
     // Default values
     mouse-cursor: MouseCursor.pointer;
+    height: size == Size.sm ? 24px : size == Size.md ? 32px : 48px;
 
     Rectangle {
-        background: root.has-hover ? hover-background : background;
+        background: root.has-hover ? resolved-bg-hover : resolved-bg;
         border-radius: radius;
+        border-width: resolved-border-width;
+        border-color: tint;
         animate background { duration: 100ms; }
 
-        HorizontalLayout {
-            padding: 10px;
-            spacing: 10px;
+        VerticalLayout {
+            padding-right: 10px;
+            padding-left: 10px;
             alignment: center;
 
-            if start-icon.width > 0 && start-icon.height > 0: Image {
-                source: start-icon;
-                width: font-size;
-                height: font-size;
-                vertical-stretch: 0;
-                colorize: foreground;
-            }
+            HorizontalLayout {
+                spacing: 10px;
+                alignment: center;
 
-            Text {
-                text: text;
-                color: foreground;
-                font-size: font-size;
-                font-weight: font-weight;
-                font-family: font-family;
-            }
+                if start-icon.width > 0 && start-icon.height > 0: VerticalLayout {
+                    alignment: center;
+                    Image {
+                        source: start-icon;
+                        width: font-size;
+                        height: font-size;
+                        vertical-stretch: 0;
+                        colorize: root.has-hover ? resolved-fg-hover : resolved-fg;
+                        animate colorize { duration: 100ms; }
+                    }
+                }
 
-            if end-icon.width > 0 && end-icon.height > 0: Image {
-                source: end-icon;
-                width: font-size;
-                height: font-size;
-                vertical-stretch: 0;
-                colorize: foreground;
+                Text {
+                    text: text;
+                    color: root.has-hover ? resolved-fg-hover : resolved-fg;
+                    font-size: font-size;
+                    font-weight: font-weight;
+                    font-family: font-family;
+                    animate color { duration: 100ms; }
+                }
+
+                if end-icon.width > 0 && end-icon.height > 0: VerticalLayout {
+                    alignment: center;
+                    Image {
+                        source: end-icon;
+                        width: font-size;
+                        height: font-size;
+                        vertical-stretch: 0;
+                        colorize: root.has-hover ? resolved-fg-hover : resolved-fg;
+                        animate colorize { duration: 100ms; }
+                    }
+                }
             }
         }
     }
