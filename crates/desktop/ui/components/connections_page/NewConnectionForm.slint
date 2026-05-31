@@ -1,6 +1,6 @@
 import { Layout } from "../../themes/layout.slint";
 import { Theme } from "../../themes/theme.slint";
-import { Tabs, TabVariant } from "../Tabs.slint";
+import { Tabs, TabVariant, TabColor } from "../Tabs.slint";
 import { Input } from "../Input.slint";
 import { Icons } from "../../icons.slint";
 import {
@@ -14,7 +14,8 @@ import { ScrollView } from "std-widgets.slint";
 export component NewConnectionForm inherits Rectangle {
     property <int> selected-protocol;
     property <bool> show-advanced:false;
-    border-radius: Layout.radius.lg;
+    in property <length> available-vertical-space: 600px;
+    border-radius: Layout.radius.xxl;
     background: Theme.palette.surface.level1;
     border-color: Theme.palette.hairline.strong;
     border-width: 1px;
@@ -22,17 +23,19 @@ export component NewConnectionForm inherits Rectangle {
     drop-shadow-blur: 20px;
     width: 50%;
     max-width: 900px;
-    height: show-advanced ? 600px : 400px;
+    height: show-advanced ? available-vertical-space : available-vertical-space < 410px ? available-vertical-space : 410px;
     clip: true;
 
     animate height { duration: 200ms; }
 
     VerticalLayout {
-        padding: 1rem;
+        padding: 2rem;
+        padding-right: 5px;
         spacing: 16px;
 
         // Form Header
         HorizontalLayout {
+            padding-right: 2rem;
             VerticalLayout {
                 alignment: center;
                 Text {
@@ -48,6 +51,7 @@ export component NewConnectionForm inherits Rectangle {
                     { key: "ftp", label: "FTP" },
                     { key: "s3", label: "S3" },
                 ];
+                tab-color: TabColor.primary;
                 selected-index <=> selected-protocol;
                 tab-selected(i) => { /* handle selection */ }
             }
@@ -56,6 +60,7 @@ export component NewConnectionForm inherits Rectangle {
         // Form Body
         ScrollView {
             VerticalLayout {
+                padding-right: 2rem;
                 spacing: 16px;
                 vertical-stretch: 1;
                 Input {
