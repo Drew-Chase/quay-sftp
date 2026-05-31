@@ -1,4 +1,4 @@
-use crate::{ApplicationState, MainWindow};
+use crate::{ApplicationState, MainWindow, SupportedPlatform};
 use i_slint_backend_winit::{EventResult, WinitWindowAccessor};
 use slint::{ComponentHandle, ToSharedString};
 
@@ -20,6 +20,16 @@ pub fn setup_application_state(app: &MainWindow) {
     app.global::<ApplicationState>().on_open_url(|url| {
         open::that(url).ok();
     });
+    app.global::<ApplicationState>().set_platform(if cfg!(target_os = "windows") {
+        SupportedPlatform::WINDOWS
+    } else if cfg!(target_os = "macos") {
+        SupportedPlatform::MACOS
+    } else if cfg!(target_os = "linux") {
+        SupportedPlatform::LINUX
+    } else {
+        panic!("Unsupported OS")
+    });
+
     let app_weak = app.as_weak();
     app.window().on_winit_window_event(move |winit_window, event| {
         if let winit::event::WindowEvent::Resized(size) = event
