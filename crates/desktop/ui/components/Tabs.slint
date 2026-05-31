@@ -13,10 +13,18 @@ export enum TabVariant {
     underlined
 }
 
+export enum TabColor {
+    default,
+    primary
+}
+
 export component Tabs inherits Rectangle {
     in property <[TabItem]> tabs;
     in property <TabVariant> variant: TabVariant.filled;
+    in property <TabColor> tab-color: TabColor.default;
+    in property <length> radius: Layout.radius.full;
     in-out property <int> selected-index: 0;
+    in property <bool> full-width: false;
 
     callback tab-selected(int);
 
@@ -24,17 +32,52 @@ export component Tabs inherits Rectangle {
     property <length> tab-height: 28px;
     property <length> tab-padding: 4px;
 
-    // Variant-derived visuals
+    // Variant-derived spacing
     property <length> effective-padding:
         variant == TabVariant.underlined ? 0px : tab-padding;
+
+    // ── Color tokens (resolved from `tab-color` + `variant`) ──────────
+    // Tint: mid-contrast accent used for outlines and underlines
+    private property <color> tint:
+        tab-color == TabColor.primary ? Theme.palette.accent.base : Theme.palette.ink.ink02;
+
+    // Filled cursor fill
+    private property <brush> cursor-fill:
+        tab-color == TabColor.primary ? Theme.palette.accent.base : Theme.palette.hero.content.c4.bg;
+
+    // Foreground rendered ON the filled cursor (high contrast against cursor-fill)
+    private property <color> on-cursor:
+        tab-color == TabColor.primary ? Theme.palette.accent.ink : Theme.palette.ink.ink01;
+
+    // Selected text for outlined / underlined variants (no opaque cursor behind it)
+    private property <brush> selected-ink:
+        tab-color == TabColor.primary ? Theme.palette.accent.base : Theme.palette.ink.ink01;
+
+    // Final selected-text: delegates to on-cursor (filled) or selected-ink (rest)
+    private property <brush> selected-text:
+        variant == TabVariant.filled ? on-cursor : selected-ink;
+
+    // Unselected text (constant across all variants/colors)
+    private property <brush> unselected-text: Theme.palette.ink.ink02;
+
+    // Badge tokens (selected state)
+    private property <brush> selected-badge-bg:
+        variant == TabVariant.filled ? on-cursor.with-alpha(0.25) : tab-color == TabColor.primary ? Theme.palette.accent.soft : Theme.palette.surface.level3;
+
+    private property <brush> selected-badge-fg:
+        variant == TabVariant.filled ? on-cursor : selected-ink;
+
+    // ── Container visuals ────────────────────────────────────────────
     property <brush> container-bg:
-        variant == TabVariant.filled ? Theme.palette.surface.level2 : variant == TabVariant.outlined ? transparent : transparent;
+        variant == TabVariant.filled ? Theme.palette.surface.level2 : transparent;
     property <brush> container-border:
         variant == TabVariant.filled ? Theme.palette.hairline.subtle : variant == TabVariant.outlined ? Theme.palette.hairline.strong : transparent;
     property <length> container-border-width:
         variant == TabVariant.underlined ? 0px : Layout.border.thin;
     property <length> container-radius:
-        variant == TabVariant.underlined ? 0px : Layout.radius.full;
+        variant == TabVariant.underlined ? 0px : radius;
+    property <length> cursor-inner-radius:
+        variant == TabVariant.underlined ? 0px : radius > effective-padding ? radius - effective-padding : 0px;
 
     property <length> total-width:
         effective-padding + (tab-width * tabs.length) + (effective-padding * (tabs.length > 0 ? tabs.length - 1 : 0)) + effective-padding;
@@ -46,15 +89,15 @@ export component Tabs inherits Rectangle {
     border-color: container-border;
     border-width: container-border-width;
 
-    // ── Sliding cursor (rendered first → behind labels) ──────────────
+    // ── Sliding cursor (filled / outlined) ───────────────────────────
     if variant == TabVariant.filled || variant == TabVariant.outlined: Rectangle {
         x: root.effective-padding + (root.tab-width + root.effective-padding) * root.selected-index;
         y: root.effective-padding;
         width: root.tab-width;
         height: root.tab-height;
-        border-radius: Layout.radius.full;
-        background: root.variant == TabVariant.filled ? Theme.palette.accent.base : transparent;
-        border-color: root.variant == TabVariant.outlined ? Theme.palette.accent.base : transparent;
+        border-radius: root.cursor-inner-radius;
+        background: root.variant == TabVariant.filled ? root.cursor-fill : transparent;
+        border-color: root.variant == TabVariant.outlined ? root.tint : transparent;
         border-width: root.variant == TabVariant.outlined ? Layout.border.thin : 0px;
 
         animate x {
@@ -69,7 +112,7 @@ export component Tabs inherits Rectangle {
         y: root.tab-height - 2px;
         width: root.tab-width;
         height: 2px;
-        background: Theme.palette.accent.base;
+        background: root.selected-ink;
         border-radius: 1px;
 
         animate x {
@@ -104,7 +147,7 @@ export component Tabs inherits Rectangle {
                 font-size: Layout.text.xs;
                 font-weight: Layout.weight.medium;
                 vertical-alignment: center;
-                color: root.selected-index == i ? root.variant == TabVariant.filled ? Theme.palette.accent.ink : Theme.palette.accent.base : Theme.palette.ink.ink02;
+                color: root.selected-index == i ? root.selected-text : root.unselected-text;
 
                 animate color { duration: Layout.duration.fast; }
             }
@@ -114,7 +157,7 @@ export component Tabs inherits Rectangle {
                 width: badge-text.width + 8px;
                 height: 16px;
                 border-radius: Layout.radius.full;
-                background: root.selected-index == i ? root.variant == TabVariant.filled ? Theme.palette.accent.ink.with-alpha(0.25) : Theme.palette.accent.soft : Theme.palette.surface.level3;
+                background: root.selected-index == i ? root.selected-badge-bg : Theme.palette.surface.level3;
 
                 animate background { duration: Layout.duration.fast; }
 
@@ -125,7 +168,7 @@ export component Tabs inherits Rectangle {
                     font-weight: Layout.weight.semibold;
                     horizontal-alignment: center;
                     vertical-alignment: center;
-                    color: root.selected-index == i ? root.variant == TabVariant.filled ? Theme.palette.accent.ink : Theme.palette.accent.base : Theme.palette.ink.ink03;
+                    color: root.selected-index == i ? root.selected-badge-fg : Theme.palette.ink.ink03;
 
                     animate color { duration: Layout.duration.fast; }
                 }
