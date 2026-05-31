@@ -1,7 +1,10 @@
 import { Layout } from "../../themes/layout.slint";
 import { Button, Color } from "../Button.slint";
+import { Input } from "../Input.slint";
+import { Icons } from "../../icons.slint";
 export component ConnectionsList {
     VerticalLayout {
+        spacing: 10px;
         HorizontalLayout {
             spacing: 10px;
             Text {
@@ -15,14 +18,20 @@ export component ConnectionsList {
 
             Button {
                 text: "Import";
-                start-icon: @image-url("../../../../../res/icons/lucide--upload.svg");
+                start-icon: Icons.upload;
             }
 
             Button {
                 text: "New Connection";
-                start-icon: @image-url("../../../../../res/icons/lucide--plus.svg");
+                start-icon: Icons.plus;
                 color: Color.primary;
             }
+        }
+
+        Input {
+            placeholder: "Search for connections, host, paths...";
+            start-icon: Icons.magnify;
+            end-icon: Icons.upload;
         }
     }
 }
