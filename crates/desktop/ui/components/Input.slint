@@ -19,6 +19,7 @@ export component Input {
 
         if label != "": HorizontalLayout {
             spacing: 2px;
+            height: 16px;
             Text {
                 text: label;
                 font-size: Layout.text.xxs;
@@ -27,6 +28,7 @@ export component Input {
 
             if required: Text {
                 text: "*";
+                width: 100%;
                 font-size: Layout.text.xxs;
                 color: Theme.palette.semantic.danger;
             }
@@ -106,6 +108,7 @@ export component Input {
 
         if description != "": Text {
             text: description;
+            height: 16px;
             font-size: Layout.text.xxs;
             color: Theme.palette.ink.ink03;
             font-family: Layout.font.mono;
