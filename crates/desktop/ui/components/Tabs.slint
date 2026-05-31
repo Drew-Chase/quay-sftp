@@ -36,6 +36,11 @@ export component Tabs inherits Rectangle {
     property <length> effective-padding:
         variant == TabVariant.underlined ? 0px : tab-padding;
 
+    // Actual rendered tab width: fills container evenly when full-width
+    property <length> rendered-tab-width: full-width
+        ? (root.width - effective-padding * (tabs.length + 1)) / max(1, tabs.length)
+        : tab-width;
+
     // ── Color tokens (resolved from `tab-color` + `variant`) ──────────
     // Tint: mid-contrast accent used for outlines and underlines
     private property <color> tint:
@@ -83,6 +88,7 @@ export component Tabs inherits Rectangle {
         effective-padding + (tab-width * tabs.length) + (effective-padding * (tabs.length > 0 ? tabs.length - 1 : 0)) + effective-padding;
 
     width: total-width;
+    horizontal-stretch: full-width ? 1 : 0;
     height: variant == TabVariant.underlined ? tab-height : tab-height + (effective-padding * 2);
     border-radius: container-radius;
     background: container-bg;
@@ -91,9 +97,9 @@ export component Tabs inherits Rectangle {
 
     // ── Sliding cursor (filled / outlined) ───────────────────────────
     if variant == TabVariant.filled || variant == TabVariant.outlined: Rectangle {
-        x: root.effective-padding + (root.tab-width + root.effective-padding) * root.selected-index;
+        x: root.effective-padding + (root.rendered-tab-width + root.effective-padding) * root.selected-index;
         y: root.effective-padding;
-        width: root.tab-width;
+        width: root.rendered-tab-width;
         height: root.tab-height;
         border-radius: root.cursor-inner-radius;
         background: root.variant == TabVariant.filled ? root.cursor-fill : transparent;
@@ -108,9 +114,9 @@ export component Tabs inherits Rectangle {
 
     // ── Underline cursor ─────────────────────────────────────────────
     if variant == TabVariant.underlined: Rectangle {
-        x: (root.tab-width + root.effective-padding) * root.selected-index;
+        x: (root.rendered-tab-width + root.effective-padding) * root.selected-index;
         y: root.tab-height - 2px;
-        width: root.tab-width;
+        width: root.rendered-tab-width;
         height: 2px;
         background: root.selected-ink;
         border-radius: 1px;
@@ -125,16 +131,16 @@ export component Tabs inherits Rectangle {
     if variant == TabVariant.underlined: Rectangle {
         x: 0;
         y: root.tab-height - 1px;
-        width: root.total-width;
+        width: root.width;
         height: 1px;
         background: Theme.palette.hairline.subtle;
     }
 
     // ── Tab labels ───────────────────────────────────────────────────
     for tab[i] in root.tabs: Rectangle {
-        x: root.effective-padding + (root.tab-width + root.effective-padding) * i;
+        x: root.effective-padding + (root.rendered-tab-width + root.effective-padding) * i;
         y: root.variant == TabVariant.underlined ? 0px : root.effective-padding;
-        width: root.tab-width;
+        width: root.rendered-tab-width;
         height: root.tab-height;
 
         HorizontalLayout {
