@@ -110,10 +110,105 @@ export component NewConnectionForm inherits Rectangle {
                 }
 
                 if show-advanced:VerticalLayout {
+                    spacing: 16px;
+                    width: root.width - 60px;
                     HorizontalLayout {
                         Input {
                             label: "CONNECTION NAME";
                             placeholder: "e.g. Production - web-01";
+                        }
+                    }
+
+                    Rectangle {
+                        background: Theme.palette.surface.level0;
+                        border-color: Theme.palette.hairline.subtle;
+                        border-width: 1px;
+                        border-radius: Layout.radius.xl;
+                        width: root.width - 50px;
+                        VerticalLayout {
+                            padding: 16px;
+                            padding-bottom: 20px;
+                            spacing: 16px;
+                            HorizontalLayout {
+                                spacing: 8px;
+                                Image {
+                                    source: Icons.lock;
+                                    width: 12px;
+                                    height: 12px;
+                                    colorize: Theme.palette.ink.ink04;
+                                }
+
+                                Text {
+                                    text: "AUTHENTICATION";
+                                    font-size: Layout.text.xxs;
+                                    color: Theme.palette.ink.ink03;
+                                }
+                            }
+
+                            Tabs {
+                                variant: TabVariant.filled;
+                                radius: Layout.radius.xl;
+                                full-width: true;
+                                width: root.width - 80px;
+                                x: 10px;
+                                tabs: [
+                                    { key: "keyfile", label: "Key File" },
+                                    { key: "password", label: "Password" },
+                                    { key: "ssh-agent", label: "SSH agent" }
+                                ];
+                            }
+
+                            Input {
+                                label: "PRIVATE KEY FILE";
+                                placeholder: "~/.ssh/id_ed25519";
+                                start-icon: Icons.key;
+                            }
+
+                            Input {
+                                label: "PASSPHRASE";
+                                placeholder: "Leave blank if none";
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        background: Theme.palette.surface.level0;
+                        border-color: Theme.palette.hairline.subtle;
+                        border-width: 1px;
+                        border-radius: Layout.radius.xl;
+                        width: root.width - 50px;
+                        VerticalLayout {
+                            padding: 16px;
+                            padding-bottom: 20px;
+                            spacing: 16px;
+                            HorizontalLayout {
+                                spacing: 8px;
+                                Image {
+                                    source: Icons.network;
+                                    width: 12px;
+                                    height: 12px;
+                                    colorize: Theme.palette.ink.ink04;
+                                }
+
+                                Text {
+                                    text: "CONECTION";
+                                    font-size: Layout.text.xxs;
+                                    color: Theme.palette.ink.ink03;
+                                }
+                            }
+
+                            HorizontalLayout {
+                                spacing: 10px;
+                                Input {
+                                    label: "JUMP HOST";
+                                    placeholder: "jumphost.example.com";
+                                }
+
+                                Input {
+                                    label: "KEEP ALIVE";
+                                    placeholder: "30";
+                                }
+                            }
                         }
                     }
                 }
