@@ -3,19 +3,35 @@ import { Theme } from "../../themes/theme.slint";
 import { Tabs, TabVariant } from "../Tabs.slint";
 import { Input } from "../Input.slint";
 import { Icons } from "../../icons.slint";
+import {
+    Button,
+    Color as ButtonColor,
+    Size as ButtonSize,
+    Variant as ButtonVariant,
+} from "../Button.slint";
+import { ScrollView } from "std-widgets.slint";
+
 export component NewConnectionForm inherits Rectangle {
     property <int> selected-protocol;
+    property <bool> show-advanced:false;
     border-radius: Layout.radius.lg;
     background: Theme.palette.surface.level1;
     border-color: Theme.palette.hairline.strong;
     border-width: 1px;
     drop-shadow-color: Theme.palette.surface.base;
     drop-shadow-blur: 20px;
-    max-height: 900px;
     width: 50%;
     max-width: 900px;
+    height: show-advanced ? 600px : 400px;
+    clip: true;
+
+    animate height { duration: 200ms; }
+
     VerticalLayout {
         padding: 1rem;
+        spacing: 16px;
+
+        // Form Header
         HorizontalLayout {
             VerticalLayout {
                 alignment: center;
@@ -37,24 +53,95 @@ export component NewConnectionForm inherits Rectangle {
             }
         }
 
-        VerticalLayout {
-            Input {
-                label: "HOST";
-                placeholder: "user@hostname or hostname";
-                description: "Test description";
+        // Form Body
+        ScrollView {
+            VerticalLayout {
+                spacing: 16px;
+                vertical-stretch: 1;
+                Input {
+                    label: "HOST";
+                    required: true;
+                    placeholder: "user@hostname or hostname";
+                }
+
+                HorizontalLayout {
+                    spacing: 12px;
+                    Input {
+                        label: "USERNAME";
+                        required: true;
+                        placeholder: "root";
+                    }
+
+                    Input {
+                        label: "PORT";
+                        placeholder: "22";
+                    }
+                }
+
+                Input {
+                    label: "REMOTE PATH";
+                    placeholder: "/home/";
+                }
+
+                TouchArea {
+                    mouse-cursor: MouseCursor.pointer;
+                    clicked => {
+                        show-advanced = !show-advanced;
+                    }
+                    HorizontalLayout {
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                        padding-left: 10px;
+                        Text {
+                            text: "ADVANCED";
+                            font-size: Layout.text.xxs;
+                            color: Theme.palette.ink.ink02;
+                        }
+
+                        Image {
+                            source: Icons.chevron;
+                            width: 16px;
+                            height: 16px;
+                            colorize: Theme.palette.ink.ink04;
+                            transform-rotation: show-advanced ? 0deg : 90deg;
+                            animate transform-rotation { duration: 200ms; }
+                        }
+                    }
+                }
+
+                if show-advanced:VerticalLayout {
+                    HorizontalLayout {
+                        Input {
+                            label: "CONNECTION NAME";
+                            placeholder: "e.g. Production - web-01";
+                        }
+                    }
+                }
             }
-            Input {
-                label: "HOST";
-                placeholder: "user@hostname or hostname";
-                description: "Test description";
+        }
+
+        // Form Footer
+        HorizontalLayout {
+            spacing: 8px;
+            Button {
+                text: "Connect";
+                color: ButtonColor.primary;
+                start-icon: Icons.key;
             }
 
-            Input {
-                label: "HOST";
-                placeholder: "user@hostname or hostname";
-                description: "Test description";
-                start-icon: Icons.magnify;
-                end-icon: Icons.upload;
+            Button {
+                text: "Save & Connect";
+                start-icon: Icons.plus;
+            }
+            // Spacer
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            Button {
+                text: "Import .ssh/config";
+                start-icon: Icons.upload;
+                variant: ButtonVariant.light;
             }
         }
     }
