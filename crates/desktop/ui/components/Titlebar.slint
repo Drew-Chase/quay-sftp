@@ -1,6 +1,9 @@
 import { Theme } from "../themes/theme.slint";
 import { Layout } from "../themes/layout.slint";
-import { ApplicationState } from "../application_state.slint";
+import {
+    ApplicationState,
+    SupportedPlatform,
+} from "../application_state.slint";
 export global WindowControls {
     callback minimize();
     callback maximize();
@@ -23,6 +26,11 @@ export component Titlebar inherits Rectangle {
         padding: 0px;
         spacing: 0px;
 
+        // macOS: reserve space for native traffic lights (~72px)
+        if ApplicationState.platform == SupportedPlatform.MACOS: Rectangle {
+            width: 72px;
+        }
+
         // Icon + Title + Drag area
         drag-area := TouchArea {
             horizontal-stretch: 1;
@@ -36,8 +44,10 @@ export component Titlebar inherits Rectangle {
             }
 
             HorizontalLayout {
-                padding-left: 138px;
-                padding-right: 50px;
+                // Windows: offset centering to account for 3×46px controls on the right
+                // macOS: no offset needed — left spacer above handles symmetry
+                padding-left: ApplicationState.platform == SupportedPlatform.WINDOWS ? 138px : 0px;
+                padding-right: ApplicationState.platform == SupportedPlatform.WINDOWS ? 50px : 0px;
                 spacing: 8px;
                 alignment: center;
                 width: 100%;
@@ -61,120 +71,122 @@ export component Titlebar inherits Rectangle {
             }
         }
 
-        // Window control buttons
-        minimize-btn := Rectangle {
-            width: 46px;
-            background: minimize-touch.has-hover ? #80808030 : transparent;
-            animate background { duration: 100ms; }
+        if ApplicationState.platform == SupportedPlatform.WINDOWS:HorizontalLayout {
+            // Window control buttons
+            minimize-btn := Rectangle {
+                width: 46px;
+                background: minimize-touch.has-hover ? #80808030 : transparent;
+                animate background { duration: 100ms; }
 
-            minimize-touch := TouchArea {
-                clicked => {
-                    WindowControls.minimize();
+                minimize-touch := TouchArea {
+                    clicked => {
+                        WindowControls.minimize();
+                    }
                 }
-            }
 
-            // Minimize icon (horizontal line)
+                // Minimize icon (horizontal line)
             Rectangle {
-                width: 10px;
-                height: 1px;
-                background: #cccccc;
-                x: (parent.width - self.width) / 2;
-                y: (parent.height - self.height) / 2;
-            }
-        }
-
-        maximize-btn := Rectangle {
-            width: 46px;
-            background: maximize-touch.has-hover ? #80808030 : transparent;
-            animate background { duration: 100ms; }
-
-            maximize-touch := TouchArea {
-                clicked => {
-                    WindowControls.maximize();
+                    width: 10px;
+                    height: 1px;
+                    background: #cccccc;
+                    x: (parent.width - self.width) / 2;
+                    y: (parent.height - self.height) / 2;
                 }
             }
 
-            if !WindowControls.maximized: Rectangle {
+            maximize-btn := Rectangle {
+                width: 46px;
+                background: maximize-touch.has-hover ? #80808030 : transparent;
+                animate background { duration: 100ms; }
+
+                maximize-touch := TouchArea {
+                    clicked => {
+                        WindowControls.maximize();
+                    }
+                }
+
+                if !WindowControls.maximized: Rectangle {
                 // Maximize icon (square outline)
                 width: 10px;
-                height: 10px;
-                x: (parent.width - self.width) / 2;
-                y: (parent.height - self.height) / 2;
-                border-width: 1px;
-                border-color: #cccccc;
-                background: transparent;
-            }
-
-            if WindowControls.maximized: Rectangle {
-                // Restore icon (two overlapping squares)
-                width: 12px;
-                height: 12px;
-                x: (parent.width - self.width) / 2;
-                y: (parent.height - self.height) / 2;
-
-                // Back square (offset top-right)
-                Rectangle {
-                    x: 2px;
-                    y: 0px;
-                    width: 10px;
                     height: 10px;
+                    x: (parent.width - self.width) / 2;
+                    y: (parent.height - self.height) / 2;
                     border-width: 1px;
                     border-color: #cccccc;
                     background: transparent;
                 }
 
-                // Front square (offset bottom-left)
+                if WindowControls.maximized: Rectangle {
+                // Restore icon (two overlapping squares)
+                width: 12px;
+                    height: 12px;
+                    x: (parent.width - self.width) / 2;
+                    y: (parent.height - self.height) / 2;
+
+                    // Back square (offset top-right)
                 Rectangle {
-                    x: 0px;
-                    y: 2px;
+                        x: 2px;
+                        y: 0px;
+                        width: 10px;
+                        height: 10px;
+                        border-width: 1px;
+                        border-color: #cccccc;
+                        background: transparent;
+                    }
+
+                    // Front square (offset bottom-left)
+                Rectangle {
+                        x: 0px;
+                        y: 2px;
+                        width: 10px;
+                        height: 10px;
+                        border-width: 1px;
+                        border-color: #cccccc;
+                        background: #1e1e1e;
+                    }
+                }
+            }
+
+            close-btn := Rectangle {
+                width: 46px;
+                background: close-touch.has-hover ? #c42b1c : transparent;
+                animate background { duration: 100ms; }
+
+                close-touch := TouchArea {
+                    clicked => {
+                        WindowControls.close();
+                    }
+                }
+
+                // Close icon (X shape)
+            Path {
                     width: 10px;
                     height: 10px;
-                    border-width: 1px;
-                    border-color: #cccccc;
-                    background: #1e1e1e;
-                }
-            }
-        }
+                    x: (parent.width - self.width) / 2;
+                    y: (parent.height - self.height) / 2;
+                    stroke: close-touch.has-hover ? #ffffff : #e45e58;
+                    stroke-width: 1px;
+                    animate stroke { duration: 100ms; }
 
-        close-btn := Rectangle {
-            width: 46px;
-            background: close-touch.has-hover ? #c42b1c : transparent;
-            animate background { duration: 100ms; }
+                    MoveTo {
+                        x: 0;
+                        y: 0;
+                    }
 
-            close-touch := TouchArea {
-                clicked => {
-                    WindowControls.close();
-                }
-            }
+                    LineTo {
+                        x: 1;
+                        y: 1;
+                    }
 
-            // Close icon (X shape)
-            Path {
-                width: 10px;
-                height: 10px;
-                x: (parent.width - self.width) / 2;
-                y: (parent.height - self.height) / 2;
-                stroke: close-touch.has-hover ? #ffffff : #e45e58;
-                stroke-width: 1px;
-                animate stroke { duration: 100ms; }
+                    MoveTo {
+                        x: 1;
+                        y: 0;
+                    }
 
-                MoveTo {
-                    x: 0;
-                    y: 0;
-                }
-
-                LineTo {
-                    x: 1;
-                    y: 1;
-                }
-
-                MoveTo {
-                    x: 1;
-                    y: 0;
-                }
-
-                LineTo {
-                    x: 0;
-                    y: 1;
+                    LineTo {
+                        x: 0;
+                        y: 1;
+                    }
                 }
             }
         }
