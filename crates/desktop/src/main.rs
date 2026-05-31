@@ -20,6 +20,19 @@ fn main() -> Result<ExitCode> {
         return quay_cli::run();
     }
 
+    #[cfg(target_os = "macos")]
+    {
+        use winit::platform::macos::WindowAttributesExtMacOS;
+        let mut backend = i_slint_backend_winit::Backend::new().unwrap();
+        backend.window_attributes_hook = Some(Box::new(|attrs| {
+            attrs
+                .with_titlebar_transparent(true)  // content extends under titlebar
+                .with_fullsize_content_view(true) // like Tauri's "Overlay" style
+                .with_title_hidden(true)          // hide the text title
+        }));
+        slint::platform::set_platform(Box::new(backend)).unwrap();
+    }
+
     let app = MainWindow::new().with_context(|| "Failed to create main window")?;
     app.window().set_size(WindowSize::Physical(PhysicalSize::new(1280, 720)));
     app.as_weak().upgrade_in_event_loop(|win| {
