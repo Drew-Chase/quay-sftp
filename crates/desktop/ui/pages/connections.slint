@@ -70,7 +70,9 @@ export component ConnectionsPage {
                 vertical-stretch: 1;
             }
 
-            NewConnectionForm { }
+            NewConnectionForm {
+                available-vertical-space: ApplicationState.window-height - 500px;
+            }
         }
 
         // Spacer
