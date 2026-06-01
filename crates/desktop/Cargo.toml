@@ -6,8 +6,8 @@ authors = ["Drew Chase"]
 
 [dependencies]
 # Windowing Crates
-slint = { version = "=1.16.1", features = ["backend-winit", "renderer-skia"] }
-i-slint-backend-winit = { version = "=1.16.1" }
+slint = { version = "1.16.1", features = ["backend-winit", "renderer-skia"] }
+i-slint-backend-winit = { version = "1.16.1" }
 winit = { version = "0.30.13" }
 slint_borderless_windows = { version = "0.1.1" }
 open = {version = "5.3.5", features = ["shellexecute-on-windows"]}
