@@ -25,6 +25,9 @@ export component Tabs inherits Rectangle {
     in property <length> radius: Layout.radius.full;
     in-out property <int> selected-index: 0;
     in property <bool> full-width: false;
+    in property <length> font-size: Layout.text.xs;
+    in property <length> badge-font-size: Layout.text.xxs;
+    in property <length> space: 4px;
 
     callback tab-selected(int);
 
@@ -37,9 +40,7 @@ export component Tabs inherits Rectangle {
         variant == TabVariant.underlined ? 0px : tab-padding;
 
     // Actual rendered tab width: fills container evenly when full-width
-    property <length> rendered-tab-width: full-width
-        ? (root.width - effective-padding * (tabs.length + 1)) / max(1, tabs.length)
-        : tab-width;
+    property <length> rendered-tab-width: full-width ? (root.width - effective-padding * 2 - space * max(0, tabs.length - 1)) / max(1, tabs.length) : tab-width;
 
     // ── Color tokens (resolved from `tab-color` + `variant`) ──────────
     // Tint: mid-contrast accent used for outlines and underlines
@@ -85,7 +86,7 @@ export component Tabs inherits Rectangle {
         variant == TabVariant.underlined ? 0px : radius > effective-padding ? radius - effective-padding : 0px;
 
     property <length> total-width:
-        effective-padding + (tab-width * tabs.length) + (effective-padding * (tabs.length > 0 ? tabs.length - 1 : 0)) + effective-padding;
+        effective-padding * 2 + (tab-width * tabs.length) + (space * max(0, tabs.length - 1));
 
     width: total-width;
     horizontal-stretch: full-width ? 1 : 0;
@@ -97,7 +98,7 @@ export component Tabs inherits Rectangle {
 
     // ── Sliding cursor (filled / outlined) ───────────────────────────
     if variant == TabVariant.filled || variant == TabVariant.outlined: Rectangle {
-        x: root.effective-padding + (root.rendered-tab-width + root.effective-padding) * root.selected-index;
+        x: root.effective-padding + (root.rendered-tab-width + root.space) * root.selected-index;
         y: root.effective-padding;
         width: root.rendered-tab-width;
         height: root.tab-height;
@@ -114,7 +115,7 @@ export component Tabs inherits Rectangle {
 
     // ── Underline cursor ─────────────────────────────────────────────
     if variant == TabVariant.underlined: Rectangle {
-        x: (root.rendered-tab-width + root.effective-padding) * root.selected-index;
+        x: (root.rendered-tab-width + root.space) * root.selected-index;
         y: root.tab-height - 2px;
         width: root.rendered-tab-width;
         height: 2px;
@@ -138,19 +139,19 @@ export component Tabs inherits Rectangle {
 
     // ── Tab labels ───────────────────────────────────────────────────
     for tab[i] in root.tabs: Rectangle {
-        x: root.effective-padding + (root.rendered-tab-width + root.effective-padding) * i;
+        x: root.effective-padding + (root.rendered-tab-width + root.space) * i;
         y: root.variant == TabVariant.underlined ? 0px : root.effective-padding;
         width: root.rendered-tab-width;
         height: root.tab-height;
 
         HorizontalLayout {
             alignment: center;
-            spacing: 4px;
+            spacing: 18px;
 
             Text {
                 text: tab.label;
                 font-family: Layout.font.sans;
-                font-size: Layout.text.xs;
+                font-size: font-size;
                 font-weight: Layout.weight.medium;
                 vertical-alignment: center;
                 color: root.selected-index == i ? root.selected-text : root.unselected-text;
@@ -159,24 +160,27 @@ export component Tabs inherits Rectangle {
             }
 
             // Badge
-            if tab.badge > 0: Rectangle {
-                width: badge-text.width + 8px;
-                height: 16px;
-                border-radius: Layout.radius.full;
-                background: root.selected-index == i ? root.selected-badge-bg : Theme.palette.surface.level3;
+            if tab.badge > 0: VerticalLayout {
+                alignment: center;
+                Rectangle {
+                    width: badge-text.width + 8px;
+                    height: 16px;
+                    border-radius: Layout.radius.full;
+                    background: root.selected-index == i ? root.selected-badge-bg : Theme.palette.surface.level3;
 
-                animate background { duration: Layout.duration.fast; }
+                    animate background { duration: Layout.duration.fast; }
 
-                badge-text := Text {
-                    text: tab.badge;
-                    font-family: Layout.font.sans;
-                    font-size: Layout.text.xxs;
-                    font-weight: Layout.weight.semibold;
-                    horizontal-alignment: center;
-                    vertical-alignment: center;
-                    color: root.selected-index == i ? root.selected-badge-fg : Theme.palette.ink.ink03;
+                    badge-text := Text {
+                        text: tab.badge;
+                        font-family: Layout.font.sans;
+                        font-size: badge-font-size;
+                        font-weight: Layout.weight.semibold;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                        color: root.selected-index == i ? root.selected-badge-fg : Theme.palette.ink.ink03;
 
-                    animate color { duration: Layout.duration.fast; }
+                        animate color { duration: Layout.duration.fast; }
+                    }
                 }
             }
         }
