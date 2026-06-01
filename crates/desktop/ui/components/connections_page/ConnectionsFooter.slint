@@ -4,7 +4,7 @@ import { Theme } from "../../themes/theme.slint";
 import { Link } from "../Link.slint";
 
 export component ConnectionsFooter {
-
+    y: 20px;
     Rectangle {
         y: -20px;
         height: 1px;
@@ -13,11 +13,11 @@ export component ConnectionsFooter {
     }
 
     HorizontalLayout {
-        padding-bottom: 20px;
+        padding-bottom: 0px;
         padding-right: 15px;
         spacing: 25px;
 
-        if ApplicationState.window-width >= 1300px || ApplicationState.window-width < 1000px:
+        if ApplicationState.window-width >= 1300px || ApplicationState.window-width < 1100px:
         Text {
             text: "Quay v\{ApplicationState.version} - Build \{ApplicationState.build}";
             font-family: Layout.font.mono;
@@ -25,7 +25,7 @@ export component ConnectionsFooter {
             font-size: Layout.text.xs;
         }
 
-        if ApplicationState.window-width >= 1000px && ApplicationState.window-width < 1300px:
+        if ApplicationState.window-width >= 1100px && ApplicationState.window-width < 1300px:
         Text {
             text: "Quay v\{ApplicationState.version}";
             font-family: Layout.font.mono;

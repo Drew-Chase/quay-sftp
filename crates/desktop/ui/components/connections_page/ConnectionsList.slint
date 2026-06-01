@@ -1,10 +1,22 @@
 import { Layout } from "../../themes/layout.slint";
-import { Button, Color } from "../Button.slint";
+import {
+    Button,
+    ButtonSize,
+    ButtonColor,
+    ButtonVariant,
+} from "../Button.slint";
 import { Input } from "../Input.slint";
 import { Icons } from "../../icons.slint";
+import { Tabs, TabVariant, TabColor, TabItem } from "../Tabs.slint";
+import { ScrollView } from "std-widgets.slint";
+import { ConnectionItem, ConnectionType, Tags } from "ConnectionItem.slint";
 export component ConnectionsList {
+    vertical-stretch: 3;
     VerticalLayout {
-        spacing: 10px;
+        spacing: 20px;
+        padding: 16px;
+        padding-top: 8px;
+        padding-bottom: 0;
         HorizontalLayout {
             spacing: 10px;
             Text {
@@ -24,14 +36,251 @@ export component ConnectionsList {
             Button {
                 text: "New Connection";
                 start-icon: Icons.plus;
-                color: Color.primary;
+                color: ButtonColor.primary;
             }
         }
 
-        Input {
-            placeholder: "Search for connections, host, paths...";
-            start-icon: Icons.magnify;
-            end-icon: Icons.upload;
+        HorizontalLayout {
+            horizontal-stretch: 1;
+            spacing: 8px;
+            Input {
+                placeholder: "Search for connections, host, paths...";
+                start-icon: Icons.magnify;
+                horizontal-stretch: 1;
+            }
+
+            Button {
+                variant: ButtonVariant.solid;
+                icon: Icons.sort;
+            }
+
+            Button {
+                variant: ButtonVariant.solid;
+                icon: Icons.filter;
+            }
+        }
+
+        Tabs {
+            variant: TabVariant.underlined;
+            tab-color: TabColor.primary;
+            font-size: Layout.text.xl;
+            space: 32px;
+            tabs: [
+                { key: "all", label: "All", badge: 10 },
+                { key: "sftp", label: "SFTP", badge: 5 },
+                { key: "ftp", label: "FTP", badge: 3 },
+                { key: "cloud", label: "Cloud", badge: 2 },
+                { key: "recent", label: "Recent", badge: 1 },
+            ];
+        }
+
+        ScrollView {
+            width: 100%;
+            height: 100%;
+            VerticalLayout {
+                height: 100%;
+                spacing: 24px;
+                padding-right: 24px;
+                ConnectionItem {
+                    connection-name: "Production Web Server";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.production;
+                    user: "user1";
+                    host: "sftp.example.com";
+                    port: 22;
+                    path: "/var/www";
+                }
+
+                ConnectionItem {
+                    connection-name: "Staging FTP Server";
+                    connection-type: ConnectionType.FTP;
+                    tag: Tags.staging;
+                    user: "admin";
+                    host: "ftp.testserver.net";
+                    port: 21;
+                    path: "/home/admin";
+                }
+
+                ConnectionItem {
+                    connection-name: "Secure Development Server";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.other;
+                    user: "deploy";
+                    host: "secure.myserver.io";
+                    port: 22;
+                    path: "/opt/deploy";
+                }
+
+                ConnectionItem {
+                    connection-name: "Backup Storage";
+                    connection-type: ConnectionType.S3;
+                    tag: Tags.other;
+                    user: "backup_user";
+                    host: "backup.storage.com";
+                    port: 22;
+                    path: "/backups";
+                }
+
+                ConnectionItem {
+                    connection-name: "Local Development";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.development;
+                    user: "developer";
+                    host: "dev.localhost";
+                    port: 2222;
+                    path: "/home/dev";
+                }
+
+                ConnectionItem {
+                    connection-name: "Cloud Production Storage";
+                    connection-type: ConnectionType.S3;
+                    tag: Tags.production;
+                    user: "cloud_admin";
+                    host: "cloud.provider.com";
+                    port: 22;
+                    path: "/mnt/storage";
+                }
+
+                ConnectionItem {
+                    connection-name: "Legacy FTP Server";
+                    connection-type: ConnectionType.FTP;
+                    tag: Tags.other;
+                    user: "legacy";
+                    host: "legacy.oldserver.org";
+                    port: 21;
+                    path: "/var/ftp";
+                }
+
+                ConnectionItem {
+                    connection-name: "API Gateway Files";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.production;
+                    user: "api_user";
+                    host: "api.gateway.net";
+                    port: 22;
+                    path: "/api/files";
+                }
+
+                ConnectionItem {
+                    connection-name: "Media CDN Storage";
+                    connection-type: ConnectionType.S3;
+                    tag: Tags.other;
+                    user: "media";
+                    host: "media.cdn.io";
+                    port: 22;
+                    path: "/cdn/media";
+                }
+
+                ConnectionItem {
+                    connection-name: "Temporary Workspace";
+                    connection-type: ConnectionType.FTP;
+                    tag: Tags.development;
+                    user: "temp_user";
+                    host: "temp.workspace.local";
+                    port: 22;
+                    path: "/tmp";
+                }
+
+                ConnectionItem {
+                    connection-name: "Production Web Server";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.production;
+                    user: "user1";
+                    host: "sftp.example.com";
+                    port: 22;
+                    path: "/var/www";
+                }
+
+                ConnectionItem {
+                    connection-name: "Staging FTP Server";
+                    connection-type: ConnectionType.FTP;
+                    tag: Tags.staging;
+                    user: "admin";
+                    host: "ftp.testserver.net";
+                    port: 21;
+                    path: "/home/admin";
+                }
+
+                ConnectionItem {
+                    connection-name: "Secure Development Server";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.other;
+                    user: "deploy";
+                    host: "secure.myserver.io";
+                    port: 22;
+                    path: "/opt/deploy";
+                }
+
+                ConnectionItem {
+                    connection-name: "Backup Storage";
+                    connection-type: ConnectionType.S3;
+                    tag: Tags.other;
+                    user: "backup_user";
+                    host: "backup.storage.com";
+                    port: 22;
+                    path: "/backups";
+                }
+
+                ConnectionItem {
+                    connection-name: "Local Development";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.development;
+                    user: "developer";
+                    host: "dev.localhost";
+                    port: 2222;
+                    path: "/home/dev";
+                }
+
+                ConnectionItem {
+                    connection-name: "Cloud Production Storage";
+                    connection-type: ConnectionType.S3;
+                    tag: Tags.production;
+                    user: "cloud_admin";
+                    host: "cloud.provider.com";
+                    port: 22;
+                    path: "/mnt/storage";
+                }
+
+                ConnectionItem {
+                    connection-name: "Legacy FTP Server";
+                    connection-type: ConnectionType.FTP;
+                    tag: Tags.other;
+                    user: "legacy";
+                    host: "legacy.oldserver.org";
+                    port: 21;
+                    path: "/var/ftp";
+                }
+
+                ConnectionItem {
+                    connection-name: "API Gateway Files";
+                    connection-type: ConnectionType.SFTP;
+                    tag: Tags.production;
+                    user: "api_user";
+                    host: "api.gateway.net";
+                    port: 22;
+                    path: "/api/files";
+                }
+
+                ConnectionItem {
+                    connection-name: "Media CDN Storage";
+                    connection-type: ConnectionType.S3;
+                    tag: Tags.other;
+                    user: "media";
+                    host: "media.cdn.io";
+                    port: 22;
+                    path: "/cdn/media";
+                }
+
+                ConnectionItem {
+                    connection-name: "Temporary Workspace";
+                    connection-type: ConnectionType.FTP;
+                    tag: Tags.development;
+                    user: "temp_user";
+                    host: "temp.workspace.local";
+                    port: 22;
+                    path: "/tmp";
+                }
+            }
         }
     }
 }

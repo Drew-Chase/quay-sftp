@@ -29,12 +29,12 @@ export component ConnectionsPage {
 
     // Background Decoration
    GridComponent {
-        width: ApplicationState.window-width >= 1000px ? 50% : 100%;
+        width: ApplicationState.window-width >= 1100px ? 50% : 100%;
         x: 0;
     }
 
     Rectangle {
-        x: ApplicationState.window-width >= 1000px ? -500px : -200px;
+        x: ApplicationState.window-width >= 1100px ? -500px : -200px;
         y: (parent.height - self.height) / 2;
         width: 100%;
         height: 100%;
@@ -56,13 +56,14 @@ export component ConnectionsPage {
         vertical-stretch: 1;
 
         // Left side
-        if ApplicationState.window-width >= 1000px:
+        if ApplicationState.window-width >= 1100px:
         VerticalLayout {
             horizontal-stretch: 1;
             padding: 60px;
             padding-left: 56px;
             padding-right: 56px;
             spacing: 0px;
+            max-width: 900px;
 
             ApplicationSplash { }
 
@@ -77,7 +78,7 @@ export component ConnectionsPage {
 
         // Spacer
         Rectangle {
-            background: hsv(160, 50%, 2%);
+            background: #0f1213;
             width: 1px;
         }
 
@@ -86,6 +87,7 @@ export component ConnectionsPage {
             horizontal-stretch: 2;
             padding: 15px;
             padding-top: 50px;
+            width: ApplicationState.window-width > 1100px ? 50% : 100%;
             ConnectionsList { }
 
             Rectangle {
