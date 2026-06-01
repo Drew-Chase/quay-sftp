@@ -1,7 +1,7 @@
 import { Layout } from "../themes/layout.slint";
 import { Theme } from "../themes/theme.slint";
 
-export enum Variant{
+export enum ButtonVariant{
     solid,
     light,
     bordered,
@@ -9,12 +9,12 @@ export enum Variant{
     faded
 }
 
-export enum Color{
+export enum ButtonColor{
     default,
     primary
 }
 
-export enum Size{
+export enum ButtonSize{
     sm,
     md,
     lg
@@ -30,46 +30,40 @@ export component Button inherits TouchArea {
     in-out property <bool> is_hovering: false;
     in property <image> start-icon;
     in property <image> end-icon;
-    in property <Color> color: Color.default;
-    in property <Size> size: Size.md;
-    in property <Variant> variant: Variant.solid;
+    in property <ButtonColor> color: ButtonColor.default;
+    in property <ButtonSize> size: ButtonSize.md;
+    in property <ButtonVariant> variant: ButtonVariant.solid;
+    in property <image> icon;
+    property <bool> icon-only:icon.width > 0 && icon.height > 0;
 
     // Base color tokens (resolved from `color` property)
-    private property <color> tint: color == Color.primary ? Theme.palette.hero.primary.base : Theme.palette.ink.ink02;
-    private property <brush> on-solid: color == Color.primary ? Theme.palette.hero.primary.fg : Theme.palette.ink.ink01;
-    private property <brush> solid-bg: color == Color.primary ? Theme.palette.hero.primary.base : Theme.palette.hero.content.c3.bg;
-    private property <brush> solid-hover-bg: color == Color.primary ? Theme.palette.hero.primary.c600 : Theme.palette.hero.content.c2.bg;
-    private property <brush> light-hover-bg: color == Color.primary ? Theme.palette.hero.primary.c200 : Theme.palette.hero.content.c3.bg;
+    private property <color> tint: color == ButtonColor.primary ? Theme.palette.hero.primary.base : Theme.palette.ink.ink02;
+    private property <brush> on-solid: color == ButtonColor.primary ? Theme.palette.hero.primary.fg : Theme.palette.ink.ink01;
+    private property <brush> solid-bg: color == ButtonColor.primary ? Theme.palette.hero.primary.base : Theme.palette.hero.content.c3.bg;
+    private property <brush> solid-hover-bg: color == ButtonColor.primary ? Theme.palette.hero.primary.c600 : Theme.palette.hero.content.c2.bg;
+    private property <brush> light-hover-bg: color == ButtonColor.primary ? Theme.palette.hero.primary.c200 : Theme.palette.hero.content.c3.bg;
 
-    // Variant-resolved background
+    // ButtonVariant-resolved background
     private property <brush> resolved-bg:
-        variant == Variant.solid ? solid-bg :
-        variant == Variant.faded ? tint.with-alpha(0.2) :
-        transparent;
+        variant == ButtonVariant.solid ? solid-bg : variant == ButtonVariant.faded ? tint.with-alpha(0.2) : transparent;
 
     private property <brush> resolved-bg-hover:
-        variant == Variant.solid ? solid-hover-bg :
-        variant == Variant.light ? light-hover-bg :
-        variant == Variant.ghost ? solid-bg :
-        variant == Variant.faded ? tint.with-alpha(0.3) :
-        transparent;
+        variant == ButtonVariant.solid ? solid-hover-bg : variant == ButtonVariant.light ? light-hover-bg : variant == ButtonVariant.ghost ? solid-bg : variant == ButtonVariant.faded ? tint.with-alpha(0.3) : transparent;
 
-    // Variant-resolved foreground
+    // ButtonVariant-resolved foreground
     private property <brush> resolved-fg:
-        variant == Variant.solid ? on-solid :
-        variant == Variant.bordered || variant == Variant.ghost ? tint :
-        color == Color.primary ? tint : on-solid;
+        variant == ButtonVariant.solid ? on-solid : variant == ButtonVariant.bordered || variant == ButtonVariant.ghost ? tint : color == ButtonColor.primary ? tint : on-solid;
 
     private property <brush> resolved-fg-hover:
-        variant == Variant.ghost ? on-solid : resolved-fg;
+        variant == ButtonVariant.ghost ? on-solid : resolved-fg;
 
     // Border (only bordered + ghost)
     private property <length> resolved-border-width:
-        variant == Variant.bordered || variant == Variant.ghost ? Layout.border.thin : 0px;
+        variant == ButtonVariant.bordered || variant == ButtonVariant.ghost ? Layout.border.thin : 0px;
 
     // Default values
     mouse-cursor: MouseCursor.pointer;
-    height: size == Size.sm ? 24px : size == Size.md ? 32px : 48px;
+    height: size == ButtonSize.sm ? 24px : size == ButtonSize.md ? 32px : 48px;
 
     Rectangle {
         background: root.has-hover ? resolved-bg-hover : resolved-bg;
@@ -99,6 +93,7 @@ export component Button inherits TouchArea {
                     }
                 }
 
+                if !icon-only:
                 Text {
                     text: text;
                     color: root.has-hover ? resolved-fg-hover : resolved-fg;
@@ -106,6 +101,14 @@ export component Button inherits TouchArea {
                     font-weight: font-weight;
                     font-family: font-family;
                     animate color { duration: 100ms; }
+                }
+
+                if icon-only:Image {
+                    source: icon;
+                    colorize: root.has-hover ? resolved-fg-hover : resolved-fg;
+                    width: font-size;
+                    height: font-size;
+
                 }
 
                 if end-icon.width > 0 && end-icon.height > 0: VerticalLayout {
