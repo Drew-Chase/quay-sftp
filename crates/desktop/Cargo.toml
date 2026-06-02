@@ -6,8 +6,9 @@ authors = ["Drew Chase"]
 
 [dependencies]
 # Windowing Crates
-iced = {version = "0.14.0", default-features = false, features = ["tiny-skia", "tokio"]}
-open = {version = "5.3.5", features = ["shellexecute-on-windows"]}
+iced = { version = "0.14.0", default-features = false, features = ["tiny-skia", "tokio"] }
+open = { version = "5.3.5", features = ["shellexecute-on-windows"] }
+aurora_iconify = { git = "https://github.com/Drew-Chase/aurora-ui" }
 
 # Internal Plumbing
 quay_lib = { path = "../lib" }

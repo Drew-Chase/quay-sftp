@@ -1,12 +1,14 @@
-use iced::widget::{container, mouse_area, text};
-use iced::window::settings::platform::CornerPreference;
-use iced::window::settings::PlatformSpecific;
+use crate::widgets::titlebar::{titlebar, TitlebarMessage};
+use iced::widget::{column, mouse_area};
 use iced::window::Direction;
-use iced::{event, mouse, window, Element, Event, Length, Point, Size, Subscription, Task};
+use iced::window::settings::PlatformSpecific;
+use iced::window::settings::platform::CornerPreference;
+use iced::{Element, Event, Point, Size, Subscription, Task, event, mouse, window};
+use crate::widgets::titlebar;
 
 #[derive(Default)]
 pub struct QuayApp {
-    window_id: Option<window::Id>,
+    pub window_id: Option<window::Id>,
     window_size: Size,
     cursor: Point,
     resize_dir: Option<Direction>,
@@ -17,6 +19,7 @@ pub enum Message {
     CursorMoved(Point),
     Resized(Size),
     LeftClick,
+    Titlebar(TitlebarMessage)
 }
 
 impl QuayApp {
@@ -47,10 +50,13 @@ impl QuayApp {
                     {
                         window::drag_resize(id, dir)
                     } else {
-                        window::drag(id)
+                        Task::none()
                     };
                 }
                 Task::none()
+            },
+            Message::Titlebar(message) => {
+                titlebar::update(message, state)
             }
         }
     }
@@ -68,13 +74,7 @@ impl QuayApp {
 
             None => mouse::Interaction::Idle,
         };
-        mouse_area(
-            container(text(format!("QUAY SFTP v{} - {}", Self::VERSION, Self::BUILD)))
-                .height(Length::Fill)
-                .width(Length::Fill),
-        )
-        .interaction(interaction)
-        .into()
+        mouse_area(column![titlebar().map(Message::Titlebar)]).interaction(interaction).into()
     }
 
     pub fn subscription(_state: &QuayApp) -> Subscription<Message> {
