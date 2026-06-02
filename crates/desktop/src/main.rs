@@ -1,10 +1,11 @@
 #![cfg_attr(all(target_os = "windows", not(debug_assertions)), windows_subsystem = "windows")]
 
 mod app;
-pub mod widgets;
 pub mod theme;
+pub mod widgets;
 
 use crate::app::QuayApp;
+use crate::theme::FontFamily;
 
 fn main() -> iced::Result {
     color_eyre::install().expect("color_eyre setup failed");
@@ -12,6 +13,14 @@ fn main() -> iced::Result {
     iced::application(QuayApp::default, QuayApp::update, QuayApp::view)
         .title(QuayApp::TITLE)
         .subscription(QuayApp::subscription)
+        .font(FontFamily::jetbrains_mono().regular())
+        .font(FontFamily::jetbrains_mono().medium())
+        .font(FontFamily::jetbrains_mono().semi_bold())
+        .font(FontFamily::jetbrains_mono().bold())
+        .font(FontFamily::inter().regular())
+        .font(FontFamily::inter().medium())
+        .font(FontFamily::inter().semi_bold())
+        .font(FontFamily::inter().bold())
         .window(QuayApp::window_settings())
         .centered()
         .run()
