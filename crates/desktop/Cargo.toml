@@ -8,7 +8,8 @@ authors = ["Drew Chase"]
 # Windowing Crates
 iced = { version = "0.14.0", default-features = false, features = ["tiny-skia", "tokio"] }
 open = { version = "5.3.5", features = ["shellexecute-on-windows"] }
-aurora_iconify = { git = "https://github.com/Drew-Chase/aurora-ui" }
+aurora_iconify = { version="0.1.0" }
+aurora_fonts = {version = "0.1.0"}
 
 # Internal Plumbing
 quay_lib = { path = "../lib" }
