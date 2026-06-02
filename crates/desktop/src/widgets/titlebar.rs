@@ -1,6 +1,8 @@
 use crate::app::{Message, QuayApp};
+use crate::theme::layout::fonts::JETBRAINS_MONO;
+use iced::font::Weight;
 use iced::widget::{button, mouse_area, row, text};
-use iced::{Element, Length, window, Task};
+use iced::{window, Element, Font, Length, Task};
 
 #[derive(Debug, Clone)]
 pub enum TitlebarMessage {
@@ -13,7 +15,7 @@ pub enum TitlebarMessage {
 pub fn titlebar() -> Element<'static, TitlebarMessage> {
     row![
 	     row![
-        mouse_area(text(format!("{} - {}", QuayApp::TITLE, QuayApp::VERSION))).on_press(TitlebarMessage::DragStart),
+        mouse_area(text(format!("{} - {}", QuayApp::TITLE, QuayApp::VERSION)).font(Font{weight: Weight::Normal, ..JETBRAINS_MONO})).on_press(TitlebarMessage::DragStart),
         button("—").on_press(TitlebarMessage::Minimize),
         button("□").on_press(TitlebarMessage::ToggleMaximize),
         button("✕").on_press(TitlebarMessage::Close),

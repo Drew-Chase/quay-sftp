@@ -161,15 +161,15 @@ pub mod color {
     // ─── Syntax tokens ───────────────────────────────────────────────────────────
     pub struct Syntax;
     impl Syntax {
-        pub const KEYWORD: Color = Color::from_rgb8(0xc1, 0x9c, 0xff);  // oklch(0.78 0.18 295)
-        pub const FN: Color = Color::from_rgb8(0x47, 0xdf, 0xff);      // oklch(0.85 0.15 230)
-        pub const STRING: Color = Color::from_rgb8(0xf4, 0xc9, 0x47);  // oklch(0.85 0.15 90)
-        pub const NUMBER: Color = Color::from_rgb8(0xff, 0xa4, 0x9b);  // oklch(0.85 0.15 25)
+        pub const KEYWORD: Color = Color::from_rgb8(0xc1, 0x9c, 0xff); // oklch(0.78 0.18 295)
+        pub const FN: Color = Color::from_rgb8(0x47, 0xdf, 0xff); // oklch(0.85 0.15 230)
+        pub const STRING: Color = Color::from_rgb8(0xf4, 0xc9, 0x47); // oklch(0.85 0.15 90)
+        pub const NUMBER: Color = Color::from_rgb8(0xff, 0xa4, 0x9b); // oklch(0.85 0.15 25)
         pub const COMMENT: Color = Color::from_rgb8(0x45, 0x47, 0x4d);
         pub const OPERATOR: Color = Color::from_rgb8(0xae, 0xb1, 0xb8);
         pub const PROPERTY: Color = Color::from_rgb8(0x72, 0xea, 0xa2); // oklch(0.85 0.15 155)
-        pub const TYPE: Color = Color::from_rgb8(0x47, 0xdf, 0xff);    // oklch(0.85 0.15 230)
-        pub const TAG: Color = Color::from_rgb8(0xff, 0x86, 0xae);     // oklch(0.80 0.18 5)
+        pub const TYPE: Color = Color::from_rgb8(0x47, 0xdf, 0xff); // oklch(0.85 0.15 230)
+        pub const TAG: Color = Color::from_rgb8(0xff, 0x86, 0xae); // oklch(0.80 0.18 5)
     }
 
     // ─── macOS traffic lights ─────────────────────────────────────────────────────
@@ -181,10 +181,11 @@ pub mod color {
     }
 }
 
-pub mod layout{
-    pub struct Font;
-    impl Font{
+pub mod layout {
+    pub mod fonts {
+        use iced::Font;
 
+        pub const JETBRAINS_MONO: Font = Font::with_name("JetBrains Mono");
+        pub const INTER: Font = Font::with_name("Inter");
     }
-
 }
