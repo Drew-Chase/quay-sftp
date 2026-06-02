@@ -1,46 +1,28 @@
 #![cfg_attr(all(target_os = "windows", not(debug_assertions)), windows_subsystem = "windows")]
 
-mod components;
-pub mod utils;
-mod application_state;
+use iced::widget::text;
+use iced::{Element, Task};
 
-slint::include_modules!();
+#[derive(Default)]
+struct App;
+#[derive(Debug, Clone)]
+enum Message {}
 
-use crate::components::handle_component_events;
-use color_eyre::eyre::Context;
-use color_eyre::Result;
-use slint::{PhysicalSize, WindowSize};
-use std::process::ExitCode;
+impl App {
+    pub(crate) fn update(_state: &mut App, _message: Message) -> Task<Message> {
+        Task::none()
+    }
+    pub(crate) fn view(_state: &'_ App) -> Element<'_, Message> {
+        text("Hello world!").into()
+    }
+}
 
-fn main() -> Result<ExitCode> {
-    color_eyre::install()?;
+fn main() -> iced::Result {
+    color_eyre::install().expect("color_eyre setup failed");
     tracing_subscriber::fmt().with_max_level(tracing::Level::TRACE).with_thread_names(true).init();
-    if std::env::args().len() > 1 {
-        // This would indicate that the user is running the application with command-line arguments
-        return quay_cli::run();
-    }
-
-    #[cfg(target_os = "macos")]
-    {
-        use winit::platform::macos::WindowAttributesExtMacOS;
-        let mut backend = i_slint_backend_winit::Backend::new().unwrap();
-        backend.window_attributes_hook = Some(Box::new(|attrs| {
-            attrs
-                .with_titlebar_transparent(true)  // content extends under titlebar
-                .with_fullsize_content_view(true) // like Tauri's "Overlay" style
-                .with_title_hidden(true)          // hide the text title
-        }));
-        slint::platform::set_platform(Box::new(backend)).unwrap();
-    }
-
-    let app = MainWindow::new().with_context(|| "Failed to create main window")?;
-    app.window().set_size(WindowSize::Physical(PhysicalSize::new(1280, 720)));
-    app.as_weak().upgrade_in_event_loop(|win| {
-        utils::center_win::center_window(win.window());
-    })?;
-    application_state::setup_application_state(&app);
-    handle_component_events(&app);
-    
-    app.run()?;
-    Ok(ExitCode::SUCCESS)
+    iced::application(move || App, App::update, App::view)
+        .title("quay sftp")
+        .decorations(false)
+        .centered()
+        .run()
 }

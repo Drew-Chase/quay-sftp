@@ -1,18 +1,8 @@
 use chrono::Timelike;
 
 fn main() {
-    slint_build();
     icon();
     generate_build_number();
-}
-
-fn slint_build() {
-    let path = "ui/main_window.slint";
-    println!("cargo:rerun-if-changed=ui");
-    unsafe {
-        std::env::set_var("SLINT_BACKEND", "winit-skia");
-    }
-    slint_build::compile(path).unwrap();
 }
 
 fn icon() {

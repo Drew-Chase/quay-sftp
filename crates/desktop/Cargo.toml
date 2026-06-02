@@ -6,14 +6,10 @@ authors = ["Drew Chase"]
 
 [dependencies]
 # Windowing Crates
-slint = { version = "1.16.1", features = ["backend-winit", "renderer-skia"] }
-i-slint-backend-winit = { version = "1.16.1" }
-winit = { version = "0.30.13" }
-slint_borderless_windows = { version = "0.1.1" }
+iced = {version = "0.14.0", default-features = false, features = ["tiny-skia", "tokio"]}
 open = {version = "5.3.5", features = ["shellexecute-on-windows"]}
 
 # Internal Plumbing
-quay_cli = { path = "../cli" }
 quay_lib = { path = "../lib" }
 
 # Workspace Crates
@@ -34,6 +30,5 @@ windows = { version = "0.62.2", features = [
 ] }
 
 [build-dependencies]
-slint-build = { version = "1.16.1" }
 winresource = { version = "0.1.31" } # For adding the icon on build.
 chrono = { version = "0.4.44", features = ["now", "clock"] }
