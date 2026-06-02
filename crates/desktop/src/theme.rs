@@ -1,3 +1,6 @@
+aurora_fonts::font_families!("Inter", "JetBrains Mono");
+aurora_iconify::icon_sets!("lucide");
+
 pub mod color {
     use iced::Color;
 
@@ -178,7 +181,6 @@ pub mod color {
     }
 }
 
-aurora_fonts::font_families!("Inter", "JetBrains Mono");
 pub mod layout{
     pub struct Font;
     impl Font{

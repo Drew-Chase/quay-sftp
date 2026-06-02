@@ -6,8 +6,6 @@ pub mod theme;
 
 use crate::app::QuayApp;
 
-aurora_iconify::icon_sets!("lucide");
-
 fn main() -> iced::Result {
     color_eyre::install().expect("color_eyre setup failed");
     tracing_subscriber::fmt().with_max_level(tracing::Level::TRACE).with_thread_names(true).init();
