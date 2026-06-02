@@ -177,3 +177,12 @@ pub mod color {
         pub const GREEN: Color = Color::from_rgb8(0x28, 0xc8, 0x40);
     }
 }
+
+aurora_fonts::font_families!("Inter", "JetBrains Mono");
+pub mod layout{
+    pub struct Font;
+    impl Font{
+
+    }
+
+}
