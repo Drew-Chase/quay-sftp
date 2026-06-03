@@ -101,5 +101,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Remove claude agent files
-CLAUDE.md
 .idea/claudeCodeTabState.xml
