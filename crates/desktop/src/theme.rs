@@ -1,5 +1,5 @@
 aurora_fonts::font_families!("Inter", "JetBrains Mono");
-aurora_iconify::icon_sets!("lucide");
+aurora_iconify::icon_sets!("lucide", "material-symbols");
 
 pub mod color {
     use iced::Color;
@@ -188,4 +188,27 @@ pub mod layout {
         pub const JETBRAINS_MONO: Font = Font::with_name("JetBrains Mono");
         pub const INTER: Font = Font::with_name("Inter");
     }
+}
+
+
+// theme.rs or an icon module
+use iced::widget::svg;
+use iced::{Element, Length};
+
+pub fn icon<'a, M: 'a>(
+    markup: &'static str,
+    size: impl Into<Length> + std::marker::Copy,
+    colors: Option<(iced::Color, iced::Color)>,
+) -> Element<'a, M> {
+    let colors = colors.unwrap_or((color::Ink::DEFAULT, color::Ink::_2));
+    svg(svg::Handle::from_memory(markup.as_bytes()))
+        .width(size)
+        .height(size)
+        .style(move |_theme, status| svg::Style {
+            color: Some(match status {
+                svg::Status::Hovered => colors.0,
+                _ => colors.1,
+            }),
+        })
+        .into()
 }
