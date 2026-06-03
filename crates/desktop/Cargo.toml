@@ -6,9 +6,9 @@ authors = ["Drew Chase"]
 
 [dependencies]
 # Windowing Crates
-iced = { version = "0.14.0", default-features = false, features = ["tiny-skia", "tokio"] }
+iced = { version = "0.14.0", default-features = false, features = ["tiny-skia", "tokio", "svg"] }
 open = { version = "5.3.5", features = ["shellexecute-on-windows"] }
-aurora_iconify = { version="0.1.0" }
+aurora_iconify = { version="0.1.1" }
 aurora_fonts = {version = "0.1.0"}
 
 # Internal Plumbing
