@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {Button, ButtonGroup} from "@heroui/react";
 import {getCurrentWindow} from "@tauri-apps/api/window";
 import {getVersion} from "@tauri-apps/api/app";
-import {I} from "./icons";
+import {I} from "./icons.tsx";
 
 // Platform detection at module load. Read from `navigator.userAgent`
 // because it's synchronous inside both WKWebView (macOS) and WebKitGTK

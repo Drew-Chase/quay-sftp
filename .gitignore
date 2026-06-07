@@ -132,7 +132,7 @@ dist
 
 # Rust
 target/
-Cargo.lock
+crates/app/Cargo.lock
 
 # InteliJ
 .idea/workspace.xml.idea/**/workspace.xml

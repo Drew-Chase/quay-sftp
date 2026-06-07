@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import WindowChrome from "./WindowChrome";
+import WindowChrome from "./WindowChrome.tsx";
 import {ErrorBoundary} from "../../ErrorBoundry.tsx";
 
 // Layout for all in-app routes: titlebar on top, sidebar on left, page content on right.

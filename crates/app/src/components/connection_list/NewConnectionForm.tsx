@@ -2,8 +2,8 @@ import {Accordion, AccordionItem, Button, Card, CardBody, CardHeader, Form, Sele
 import {useEffect, useState} from "react";
 import {Icon} from "@iconify-icon/react";
 
-import {Input} from "../extends/Input";
-import {NumberInput} from "../extends/NumberInput";
+import {Input} from "../extends/Input.tsx";
+import {NumberInput} from "../extends/NumberInput.tsx";
 import {TagGroupSelector, TagOption} from "../TagOptions.tsx";
 import {FileInput} from "../extends/FileInput.tsx";
 import {Select} from "../extends/Select.tsx";
