@@ -9,16 +9,19 @@ publish version="":
     uv -g commit-push-tag {{ version }}
 
 # Installs rust and node dependencies.
+[working-directory('crates/app')]
 install:
     cargo install update-version --locked
     cargo install tauri-cli --locked
     pnpm i
 
 # Builds the application and its installers for the host platform
+[working-directory('crates/app')]
 build: install
     cargo tauri build
 
 # Opens the app in developer mode, allowing for hot-reloading and debugging
+[working-directory('crates/app')]
 dev: install
     cargo tauri dev
 
@@ -30,14 +33,23 @@ clean: _clean-node
     cargo clean
 
 [windows]
+[working-directory('crates/app')]
 _clean-node:
     Remove-Item ./node_modules -Recurse -Force
 
 [linux]
-[macos]
+[working-directory('crates/app')]
 _clean-node:
-    rm ./node_modules -rf
+    rm -rf ./node_modules ./dist ./target
+
+[macos]
+[working-directory('crates/app')]
+_clean-node:
+    rm -fdr ./node_modules ./dist ./target
+
+
 
 # Generates the various icon sizes and formats for the different platforms
+[working-directory('crates/app')]
 gen-icons:
-    cargo tauri icon .\src\img\logo.svg --ios-color "#00CFFF"
+    cargo tauri icon crates/app/src/img/logo.svg --ios-color "#00CFFF"
