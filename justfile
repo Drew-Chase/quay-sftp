@@ -35,7 +35,7 @@ clean: _clean-node
 [windows]
 [working-directory('crates/app')]
 _clean-node:
-    Remove-Item ./node_modules -Recurse -Force
+    if (Test-Path ./node_modules) { Remove-Item ./node_modules -Recurse -Force }
 
 [linux]
 [working-directory('crates/app')]

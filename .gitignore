@@ -169,3 +169,5 @@ debug/
 **/*.rs.bk
 *.pdb
 .idea/claudeCodeTabState.xml
+.idea/data[sS]ource*
+.idea/*[tT]oolkit*
