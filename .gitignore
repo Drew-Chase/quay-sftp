@@ -168,4 +168,4 @@ fabric.properties
 debug/
 **/*.rs.bk
 *.pdb
-*claude*
+.idea/claudeCodeTabState.xml
