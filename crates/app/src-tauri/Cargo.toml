@@ -2,7 +2,7 @@
 name = "quay_sftp"
 version = "0.0.0"
 description = ""
-authors = ["Drew Chase (Macbook) <dcmanproductions@gmail.com>"]
+authors = ["Drew Chase"]
 edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -16,11 +16,21 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
+chrono = { version = "0.4.45" }
 
 [dependencies]
-tauri = { version = "2", features = [] }
-tauri-plugin-shell = "2"
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-tauri-plugin-dialog = "2"
-tauri-plugin-opener = "2"
+tauri = { version = "2.11.2", features = [] }
+tauri-plugin-shell = { version = "2.3.5" }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = { version = "1.0.150" }
+tauri-plugin-dialog = { version = "2.7.1" }
+tauri-plugin-opener = { version = "2.5.4" }
+rusqlite = { version = "0.32", features = ["bundled"] }
+chrono = { version = "0.4" }
+
+
+# Workspace Crates
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+color-eyre = { workspace = true }
+tauri-plugin-log = "2"
