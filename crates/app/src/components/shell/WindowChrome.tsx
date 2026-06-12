@@ -3,6 +3,7 @@ import {Button, ButtonGroup} from "@heroui/react";
 import {getCurrentWindow} from "@tauri-apps/api/window";
 import {getVersion} from "@tauri-apps/api/app";
 import {I} from "./icons.tsx";
+import {error} from "@tauri-apps/plugin-log";
 
 // Platform detection at module load. Read from `navigator.userAgent`
 // because it's synchronous inside both WKWebView (macOS) and WebKitGTK
@@ -30,7 +31,15 @@ export default function WindowChrome()
 {
     const appWindow = getCurrentWindow();
     const [version, setVersion] = useState("");
-    useEffect(() => { getVersion().then(setVersion).catch(() => {}); }, []);
+    useEffect(() =>
+    {
+        appWindow.show();
+        getVersion().then(setVersion).catch(async (e) =>
+        {
+            await error(`Failed to get application version ${e}`);
+        });
+    }, []);
+
     return (
         <div
             className={

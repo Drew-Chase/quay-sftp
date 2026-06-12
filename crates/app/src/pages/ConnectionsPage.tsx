@@ -11,7 +11,6 @@ export function ConnectionsPage()
     const navigate = useNavigate();
     const {setActiveConnection} = useConnectionGateway();
 
-
     // @ts-ignore
     function handleSelectConnection(connection: Connection)
     {
@@ -34,7 +33,7 @@ export function ConnectionsPage()
 
             {/* Connections List */}
             <div className={"flex flex-col grow w-full"}>
-                <SavedConnectionsList />
+                <SavedConnectionsList/>
             </div>
         </div>
     );
