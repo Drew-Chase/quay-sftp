@@ -4,4 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-suppaftp = {version =  "8.0.4", features = [] }
+tokio = { version = "1.52.3", features = ["rt-multi-thread", "tracing", "full"] }
+suppaftp = { version = "8.0.4", features = ["tokio-async-native-tls", "tokio"] }
+tracing = { workspace = true }
+thiserror = { version = "2.0.18" }
