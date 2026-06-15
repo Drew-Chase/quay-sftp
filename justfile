@@ -36,6 +36,7 @@ clean: _clean-node
 [working-directory('crates/app')]
 _clean-node:
     if (Test-Path ./node_modules) { Remove-Item ./node_modules -Recurse -Force }
+    if (Test-Path ./dist) { Remove-Item ./dist -Recurse -Force }
 
 [linux]
 [working-directory('crates/app')]
@@ -53,3 +54,10 @@ _clean-node:
 [working-directory('crates/app')]
 gen-icons:
     cargo tauri icon crates/app/src/img/logo.svg --ios-color "#00CFFF"
+
+
+[windows]
+docker:
+    New-Item -ItemType Directory -Force -Path target/docker, target/release | Out-Null
+    docker build -f LinuxCrossBuild.dockerfile -t quay-sftp-linux-crossbuild .
+    docker run --rm -v "${PWD}:/workspace" -v "${PWD}/target/docker:/target" quay-sftp-linux-crossbuild
